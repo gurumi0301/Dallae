@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(60, 4.8%, 95.9%);
+  --secondary-foreground: hsl(24, 9.8%, 10%);
+  --accent: hsl(60, 4.8%, 95.9%);
+  --accent-foreground: hsl(24, 9.8%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.5rem;
+  
+  /* Custom colors for mental health theme */
+  --soft-blue-50: hsl(207, 89%, 86%);
+  --soft-blue-100: hsl(207, 89%, 77%);
+  --soft-blue-200: hsl(207, 89%, 68%);
+  --soft-blue-300: hsl(207, 89%, 59%);
+  --soft-blue-400: hsl(207, 89%, 54%);
+  --soft-blue-500: hsl(207, 89%, 49%);
+  --soft-blue-600: hsl(207, 89%, 44%);
+  
+  --mint-50: hsl(125, 38%, 85%);
+  --mint-100: hsl(125, 38%, 78%);
+  --mint-200: hsl(125, 38%, 71%);
+  --mint-300: hsl(125, 38%, 64%);
+  --mint-400: hsl(125, 38%, 57%);
+  --mint-500: hsl(125, 38%, 50%);
+  --mint-600: hsl(125, 38%, 43%);
+  
+  --peach-50: hsl(36, 100%, 94%);
+  --peach-100: hsl(36, 100%, 89%);
+  --peach-200: hsl(36, 100%, 80%);
+  --peach-300: hsl(36, 100%, 71%);
+  --peach-400: hsl(36, 100%, 62%);
+  --peach-500: hsl(36, 100%, 53%);
+  --peach-600: hsl(36, 100%, 44%);
+}
+
+.dark {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(240, 3.7%, 15.9%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(240, 3.7%, 15.9%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-gradient-to-br from-blue-50 to-green-50 text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
+@layer utilities {
+  .soft-blue-50 { background-color: var(--soft-blue-50); }
+  .soft-blue-100 { background-color: var(--soft-blue-100); }
+  .soft-blue-200 { background-color: var(--soft-blue-200); }
+  .soft-blue-300 { background-color: var(--soft-blue-300); }
+  .soft-blue-400 { background-color: var(--soft-blue-400); }
+  .soft-blue-500 { background-color: var(--soft-blue-500); }
+  .soft-blue-600 { background-color: var(--soft-blue-600); }
+  
+  .mint-50 { background-color: var(--mint-50); }
+  .mint-100 { background-color: var(--mint-100); }
+  .mint-200 { background-color: var(--mint-200); }
+  .mint-300 { background-color: var(--mint-300); }
+  .mint-400 { background-color: var(--mint-400); }
+  .mint-500 { background-color: var(--mint-500); }
+  .mint-600 { background-color: var(--mint-600); }
+  
+  .peach-50 { background-color: var(--peach-50); }
+  .peach-100 { background-color: var(--peach-100); }
+  .peach-200 { background-color: var(--peach-200); }
+  .peach-300 { background-color: var(--peach-300); }
+  .peach-400 { background-color: var(--peach-400); }
+  .peach-500 { background-color: var(--peach-500); }
+  .peach-600 { background-color: var(--peach-600); }
+  
+  .text-soft-blue-400 { color: var(--soft-blue-400); }
+  .text-soft-blue-500 { color: var(--soft-blue-500); }
+  .text-soft-blue-600 { color: var(--soft-blue-600); }
+  .text-mint-400 { color: var(--mint-400); }
+  .text-mint-500 { color: var(--mint-500); }
+  .text-mint-600 { color: var(--mint-600); }
+  .text-peach-400 { color: var(--peach-400); }
+  .text-peach-500 { color: var(--peach-500); }
+  .text-peach-600 { color: var(--peach-600); }
+  
+  .border-soft-blue-400 { border-color: var(--soft-blue-400); }
+  .border-mint-400 { border-color: var(--mint-400); }
+  .border-peach-400 { border-color: var(--peach-400); }
+  
+  .ring-soft-blue-400 { --tw-ring-color: var(--soft-blue-400); }
+  .ring-mint-400 { --tw-ring-color: var(--mint-400); }
+  .ring-peach-400 { --tw-ring-color: var(--peach-400); }
+}
+
+/* Mobile-optimized scrolling */
+.mobile-scroll {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* Gradient backgrounds for warm feeling */
+.gradient-soft-blue {
+  background: linear-gradient(135deg, var(--soft-blue-100), var(--soft-blue-200));
+}
+
+.gradient-mint {
+  background: linear-gradient(135deg, var(--mint-100), var(--mint-200));
+}
+
+.gradient-peach {
+  background: linear-gradient(135deg, var(--peach-100), var(--peach-200));
+}
+
+.gradient-soft-blue-mint {
+  background: linear-gradient(135deg, var(--soft-blue-400), var(--mint-400));
+}
+
+/* Animation for smooth transitions */
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Chat bubble styles */
+.chat-bubble-sent {
+  background: linear-gradient(135deg, var(--soft-blue-400), var(--mint-400));
+  border-radius: 1rem 1rem 0.25rem 1rem;
+}
+
+.chat-bubble-received {
+  background-color: hsl(0, 0%, 95%);
+  border-radius: 1rem 1rem 1rem 0.25rem;
+}
+
+.chat-bubble-ai {
+  background: linear-gradient(135deg, var(--peach-100), var(--peach-200));
+  border-radius: 1rem 1rem 1rem 0.25rem;
+  border-left: 4px solid var(--peach-400);
+}
