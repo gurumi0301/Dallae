@@ -11,24 +11,14 @@ import { z } from "zod";
 export async function registerRoutes(app: Express): Promise<Server> {
   const httpServer = createServer(app);
   
-  // Initialize WebSocket server for real-time features
-  const wss = new WebSocketServer({ server: httpServer });
-  
-  // Store active connections
+  // Store active connections (WebSocket server temporarily disabled to avoid conflicts)
   const activeConnections = new Map<string, any>();
   
-  wss.on('connection', (ws, req) => {
-    const sessionId = req.url?.split('sessionId=')[1];
-    if (sessionId) {
-      activeConnections.set(sessionId, ws);
-    }
-    
-    ws.on('close', () => {
-      if (sessionId) {
-        activeConnections.delete(sessionId);
-      }
-    });
-  });
+  // TODO: Re-enable WebSocket server after resolving Vite WebSocket conflicts
+  // const wss = new WebSocketServer({ 
+  //   server: httpServer,
+  //   path: '/api/ws'
+  // });
 
   // Anonymous user creation/retrieval
   app.post('/api/auth/anonymous', async (req, res) => {
