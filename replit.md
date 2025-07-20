@@ -107,6 +107,11 @@ This is a mental health support mobile application called "마음담기" (Maeum-
 
 ```
 Changelog:
+- July 20, 2025. Complete conversion from TypeScript + Tailwind CSS to pure JavaScript + CSS
+  - Converted all TypeScript files (.ts/.tsx) to JavaScript files (.js/.jsx)
+  - Replaced Tailwind CSS with custom CSS classes and utility styles
+  - Removed all TypeScript configuration files
+  - Maintained full functionality while achieving cleaner, dependency-free codebase
 - June 30, 2025. Initial setup
 ```
 
