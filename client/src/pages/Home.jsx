@@ -5,17 +5,19 @@ import { Link } from 'wouter';
 export default function Home() {
   const { user } = useAnonymousUser();
   const [selectedEmotion, setSelectedEmotion] = useState('');
-  const [scrolled, setScrolled] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      setScrolled(scrollTop > 100);
+      setScrollY(window.scrollY);
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const scrollProgress = Math.min(scrollY / 200, 1); // 200px까지 완전 변환
+  const isScrolled = scrollY > 50;
 
   const emotions = [
     { name: '행복', emoji: '😊', color: 'peach' },
@@ -51,23 +53,43 @@ export default function Home() {
   ];
 
   return (
-    <div className={`home-container ${scrolled ? 'scrolled' : ''}`}>
+    <div className="home-container" style={{
+      background: `linear-gradient(135deg, 
+        hsl(207, 89%, ${96 - scrollProgress * 8}%) 0%, 
+        hsl(125, 38%, ${97 - scrollProgress * 8}%) 50%, 
+        hsl(36, 100%, ${98 - scrollProgress * 8}%) 100%)`
+    }}>
       {/* Background decorations */}
-      <div className="bg-decoration bg-decoration-1"></div>
-      <div className="bg-decoration bg-decoration-2"></div>
-      <div className="bg-decoration bg-decoration-3"></div>
+      <div className="bg-decoration bg-decoration-1" style={{opacity: 0.1 * (1 - scrollProgress)}}></div>
+      <div className="bg-decoration bg-decoration-2" style={{opacity: 0.1 * (1 - scrollProgress)}}></div>
+      <div className="bg-decoration bg-decoration-3" style={{opacity: 0.1 * (1 - scrollProgress)}}></div>
       
-      <header className={`home-header ${scrolled ? 'scrolled' : ''}`}>
-        <div className="greeting">
-          <div className="greeting-icon">🌈</div>
-          <h1 className="greeting-text">
+      <header className={`home-header ${isScrolled ? 'scrolled' : ''}`}>
+        <div className="greeting" style={{
+          padding: `${24 - scrollProgress * 12}px 16px`,
+          borderRadius: `${20 - scrollProgress * 8}px`
+        }}>
+          <div className="greeting-icon" style={{
+            fontSize: `${32 - scrollProgress * 12}px`,
+            marginBottom: `${16 - scrollProgress * 8}px`
+          }}>🌈</div>
+          <h1 className="greeting-text" style={{
+            fontSize: `${26 - scrollProgress * 8}px`,
+            marginBottom: `${8 - scrollProgress * 8}px`
+          }}>
             안녕하세요, <span className="user-name">{user?.anonymousName}</span>님
           </h1>
-          {!scrolled && <p className="greeting-subtitle">오늘 기분은 어떠신가요?</p>}
+          <p className="greeting-subtitle" style={{
+            opacity: 1 - scrollProgress,
+            height: scrollProgress > 0.8 ? '0px' : 'auto',
+            overflow: 'hidden'
+          }}>오늘 기분은 어떠신가요?</p>
         </div>
       </header>
 
-      <section className="emotion-section">
+      <section className="emotion-section" style={{
+        marginTop: isScrolled ? '80px' : '0px'
+      }}>
         <h2 className="section-title">지금 느끼는 감정</h2>
         <div className="emotion-grid">
           {emotions.map((emotion) => (
@@ -106,26 +128,16 @@ export default function Home() {
           padding-bottom: 100px;
           position: relative;
           min-height: 100vh;
-          background: linear-gradient(135deg, #f0f9ff 0%, #f0fdf4 50%, #fefce8 100%);
           overflow: hidden;
-          transition: background 0.6s ease;
-        }
-
-        .home-container.scrolled {
-          background: white;
+          transition: background 0.1s ease;
         }
 
         /* Background decorative elements */
         .bg-decoration {
           position: absolute;
           border-radius: 50%;
-          opacity: 0.1;
           pointer-events: none;
-          transition: opacity 0.6s ease;
-        }
-
-        .home-container.scrolled .bg-decoration {
-          opacity: 0;
+          transition: opacity 0.2s ease;
         }
 
         .bg-decoration-1 {
@@ -164,52 +176,51 @@ export default function Home() {
           margin-bottom: 40px;
           position: relative;
           z-index: 100;
-          transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .home-header.scrolled {
           position: fixed;
-          top: 0;
-          left: 50%;
-          transform: translateX(-50%);
-          width: calc(100% - 32px);
-          max-width: 396px;
+          top: 8px;
+          left: 0;
+          right: 0;
+          width: 100%;
+          max-width: none;
           margin-bottom: 0;
-          padding: 8px 0;
+          padding: 8px 16px;
           z-index: 1000;
-
-          background: linear-gradient(135deg, #f0f9ff 0%, #f0fdf4 50%, #fefce8 100%);
-          border-radius: 16px;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(20px);
+          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
         }
 
         .greeting {
           text-align: center;
-          padding: 24px 16px;
           background: rgba(255, 255, 255, 0.9);
           backdrop-filter: blur(10px);
-          border-radius: 20px;
           box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
           border: 1px solid rgba(255, 255, 255, 0.2);
-          transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+          max-width: 428px;
+          margin: 0 auto;
         }
 
         .home-header.scrolled .greeting {
-          padding: 12px 16px;
-          border-radius: 12px;
-          box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+          background: transparent;
+          backdrop-filter: none;
+          box-shadow: none;
+          border: none;
+          max-width: none;
         }
 
         .greeting-icon {
-          font-size: 32px;
-          margin-bottom: 16px;
           animation: bounce 2s infinite;
-          transition: all 0.6s ease;
+          transition: all 0.2s ease;
+          display: inline-block;
         }
 
         .home-header.scrolled .greeting-icon {
-          font-size: 20px;
-          margin-bottom: 8px;
           animation: none;
         }
 
@@ -220,17 +231,10 @@ export default function Home() {
         }
 
         .greeting-text {
-          font-size: 26px;
           font-weight: 700;
           color: var(--gray-800);
-          margin-bottom: 8px;
           line-height: 1.2;
-          transition: all 0.6s ease;
-        }
-
-        .home-header.scrolled .greeting-text {
-          font-size: 18px;
-          margin-bottom: 0;
+          transition: all 0.2s ease;
         }
 
         .user-name {
@@ -245,15 +249,7 @@ export default function Home() {
           color: var(--gray-600);
           font-size: 16px;
           font-weight: 500;
-          transition: all 0.6s ease;
-          opacity: 1;
-        }
-
-        .home-header.scrolled .greeting-subtitle {
-          opacity: 0;
-          height: 0;
-          margin: 0;
-          overflow: hidden;
+          transition: all 0.2s ease;
         }
 
         .section-title {
@@ -281,12 +277,7 @@ export default function Home() {
           margin-bottom: 40px;
           position: relative;
           z-index: 1;
-          margin-top: 0;
-          transition: margin-top 0.6s ease;
-        }
-
-        .home-container.scrolled .emotion-section {
-          margin-top: 80px;
+          transition: margin-top 0.3s ease;
         }
 
         .emotion-grid {
