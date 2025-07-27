@@ -10,21 +10,27 @@
 /* Desktop responsive design */
 @media (min-width: 768px) {
   .home-container {
-    padding: 40px 60px;
+    padding: 40px 50px;
     display: grid;
-    grid-template-columns: 3fr 2fr;
-    gap: 60px;
+    grid-template-columns: 1fr;
+    gap: 50px;
     align-items: start;
     min-height: 100vh;
     width: 100%;
     box-sizing: border-box;
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
+    overflow-y: auto;
   }
 
   .home-header {
-    grid-column: 1 / -1;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
+  }
+  
+  .home-main-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 50px;
   }
 
   .home-greeting {
@@ -50,12 +56,15 @@
     margin-top: 12px;
   }
 
-  .home-emotion-section {
-    grid-column: 1;
+  .home-emotions-and-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
   }
-
-  .home-actions-section {
-    grid-column: 2;
+  
+  .home-quick-actions {
+    display: flex;
+    flex-direction: column;
   }
 
   .home-section-title {
@@ -108,6 +117,40 @@
 
   .home-action-description {
     font-size: 15px;
+  }
+  
+  /* 통계 섹션 스타일 */
+  .home-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  
+  .home-stat-card {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background: var(--card);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .home-stat-icon {
+    font-size: 28px;
+    margin-right: 16px;
+  }
+  
+  .home-stat-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 2px;
+  }
+  
+  .home-stat-label {
+    font-size: 13px;
+    color: var(--gray-600);
   }
 
   /* Desktop scroll adjustments */

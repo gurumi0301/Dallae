@@ -210,36 +210,62 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="home-emotion-section">
-        <h2 className="home-section-title">지금 느끼는 감정</h2>
-        <div className="home-emotion-grid">
-          {emotions.map((emotion) => (
-            <button
-              key={emotion.name}
-              className={`home-emotion-btn ${selectedEmotion === emotion.name ? 'selected' : ''}`}
-              onClick={() => setSelectedEmotion(emotion.name)}
-            >
-              <span className="home-emotion-emoji">{emotion.emoji}</span>
-              <span className="home-emotion-name">{emotion.name}</span>
-            </button>
-          ))}
-        </div>
-      </section>
-
-      <section className="home-actions-section">
-        <h2 className="home-section-title">빠른 실행</h2>
-        <div className="home-action-grid">
-          {quickActions.map((action) => (
-            <Link key={action.title} href={action.path} className="home-action-card">
-              <div className="home-action-icon">{action.icon}</div>
-              <div className="home-action-content">
-                <h3 className="home-action-title">{action.title}</h3>
-                <p className="home-action-description">{action.description}</p>
+      <div className="home-main-content">
+        <div className="home-emotions-and-stats">
+          <section>
+            <h2 className="home-section-title">감정 체크인</h2>
+            <div className="home-emotion-grid">
+              {emotions.map((emotion) => (
+                <button
+                  key={emotion.name}
+                  className={`home-emotion-btn ${selectedEmotion === emotion.name ? 'selected' : ''}`}
+                  onClick={() => setSelectedEmotion(emotion.name)}
+                >
+                  <span className="home-emotion-emoji">{emotion.emoji}</span>
+                  <span className="home-emotion-name">{emotion.name}</span>
+                </button>
+              ))}
+            </div>
+          </section>
+          
+          <section>
+            <h2 className="home-section-title">오늘의 통계</h2>
+            <div className="home-stats-grid">
+              <div className="home-stat-card">
+                <div className="home-stat-icon">📊</div>
+                <div className="home-stat-content">
+                  <div className="home-stat-value">7일</div>
+                  <div className="home-stat-label">연속 기록</div>
+                </div>
               </div>
-            </Link>
-          ))}
+              <div className="home-stat-card">
+                <div className="home-stat-icon">💬</div>
+                <div className="home-stat-content">
+                  <div className="home-stat-value">3회</div>
+                  <div className="home-stat-label">오늘 대화</div>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
-      </section>
+        
+        <div className="home-quick-actions">
+          <section>
+            <h2 className="home-section-title">빠른 실행</h2>
+            <div className="home-action-grid">
+              {quickActions.map((action) => (
+                <Link key={action.title} href={action.path} className="home-action-card">
+                  <div className="home-action-icon">{action.icon}</div>
+                  <div className="home-action-content">
+                    <h3 className="home-action-title">{action.title}</h3>
+                    <p className="home-action-description">{action.description}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        </div>
+      </div>
 
       <div className="home-bottom-spacer"></div>
     </div>

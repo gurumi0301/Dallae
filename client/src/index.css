@@ -146,9 +146,17 @@ body {
 
   /* 다른 페이지들도 사이드바 공간 확보 */
   .app-container > :not(.desktop-sidebar):not(.bottom-nav) {
-    margin-left: 250px;
-    width: calc(100vw - 250px);
-    max-width: calc(100vw - 250px);
+    margin-left: 200px;
+    width: calc(100vw - 200px);
+    max-width: calc(100vw - 200px);
+    transition: margin-left 0.3s ease, width 0.3s ease;
+  }
+  
+  /* 사이드바 접힘 상태 */
+  .sidebar-collapsed .app-container > :not(.desktop-sidebar):not(.bottom-nav) {
+    margin-left: 60px;
+    width: calc(100vw - 60px);
+    max-width: calc(100vw - 60px);
   }
 }
 
