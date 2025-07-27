@@ -175,7 +175,7 @@ body {
   }
 
   /* 다른 페이지들도 사이드바 공간 확보 */
-  .app-container > :not(.desktop-sidebar):not(.bottom-nav) {
+  .app-container:not(.auth-layout) > :not(.desktop-sidebar):not(.bottom-nav) {
     margin-left: 160px;
     width: calc(100vw - 160px);
     max-width: calc(100vw - 160px);
@@ -184,8 +184,15 @@ body {
     height: 100vh;
   }
   
+  /* 인증 페이지에서는 전체 화면 사용 */
+  .app-container.auth-layout > :not(.desktop-sidebar):not(.bottom-nav) {
+    margin-left: 0;
+    width: 100vw;
+    max-width: 100vw;
+  }
+  
   /* 사이드바 접힘 상태 */
-  .sidebar-collapsed .app-container > :not(.desktop-sidebar):not(.bottom-nav) {
+  .sidebar-collapsed .app-container:not(.auth-layout) > :not(.desktop-sidebar):not(.bottom-nav) {
     margin-left: 60px;
     width: calc(100vw - 60px);
     max-width: calc(100vw - 60px);
