@@ -242,34 +242,24 @@ body {
 /* Desktop Layout */
 @media (min-width: 768px) {
   body {
-    display: flex;
     height: 100vh;
     overflow: hidden;
   }
   
-  .desktop-sidebar {
-    flex-shrink: 0;
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100vh;
-    z-index: 100;
-  }
-  
   .app-container {
-    flex: 1;
     max-width: none;
     width: 100vw;
     margin: 0;
-    margin-left: 200px;
+    padding-left: 200px;
     box-shadow: none;
     overflow-y: auto;
     height: 100vh;
-    transition: margin-left 0.2s ease;
+    transition: padding-left 0.2s ease;
+    box-sizing: border-box;
   }
   
   body.sidebar-collapsed .app-container {
-    margin-left: 60px;
+    padding-left: 60px;
   }
 }
 
