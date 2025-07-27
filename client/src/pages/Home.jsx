@@ -65,9 +65,18 @@ export default function Home() {
       <div className="bg-decoration bg-decoration-3" style={{opacity: 0.1 * (1 - scrollProgress)}}></div>
       
       <header className={`home-header ${isScrolled ? 'scrolled' : ''}`}>
-        <div className="greeting">
-          <div className="greeting-icon">🌈</div>
-          <h1 className="greeting-text">
+        <div className="greeting" style={{
+          padding: isScrolled ? '16px' : '24px 16px',
+          borderRadius: isScrolled ? '14px' : '20px'
+        }}>
+          <div className="greeting-icon" style={{
+            fontSize: isScrolled ? '24px' : '32px',
+            marginBottom: isScrolled ? '8px' : '16px'
+          }}>🌈</div>
+          <h1 className="greeting-text" style={{
+            fontSize: isScrolled ? '20px' : '26px',
+            marginBottom: isScrolled ? '0' : '8px'
+          }}>
             안녕하세요, <span className="user-name">{user?.anonymousName}</span>님
           </h1>
           {!isScrolled && <p className="greeting-subtitle">오늘 기분은 어떠신가요?</p>}
@@ -182,8 +191,6 @@ export default function Home() {
           box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
           border: 1px solid rgba(255, 255, 255, 0.2);
           margin: 0 auto;
-          padding: 24px 16px;
-          border-radius: 20px;
         }
 
         .home-header.scrolled .greeting {
@@ -191,19 +198,10 @@ export default function Home() {
           backdrop-filter: blur(20px);
           box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
           border: 1px solid rgba(0, 0, 0, 0.1);
-          padding: 16px;
-          border-radius: 14px;
         }
 
         .greeting-icon {
-          font-size: 32px;
-          margin-bottom: 16px;
           display: inline-block;
-        }
-
-        .home-header.scrolled .greeting-icon {
-          font-size: 24px;
-          margin-bottom: 8px;
         }
 
 
@@ -212,13 +210,6 @@ export default function Home() {
           font-weight: 700;
           color: var(--gray-800);
           line-height: 1.2;
-          font-size: 26px;
-          margin-bottom: 8px;
-        }
-
-        .home-header.scrolled .greeting-text {
-          font-size: 20px;
-          margin-bottom: 0;
         }
 
         .user-name {
