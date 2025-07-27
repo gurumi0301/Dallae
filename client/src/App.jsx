@@ -57,7 +57,7 @@ function Router() {
   const isAuthPage = location.startsWith('/auth/');
 
   return (
-    <div className="app-container">
+    <div className={`app-container ${isAuthPage ? 'auth-layout' : ''}`}>
       {!isAuthPage && <DesktopSidebar />}
       <Switch>
         <Route path="/auth/login" component={Login} />
