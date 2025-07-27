@@ -5,6 +5,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import Home from "./pages/Home";
 import Chat from "./pages/Chat";
+import ChatRoom from "./pages/ChatRoom";
 import Diary from "./pages/Diary";
 import Recommendations from "./pages/Recommendations";
 import Profile from "./pages/Profile";
@@ -51,7 +52,7 @@ function Router() {
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/chat" component={Chat} />
-        <Route path="/chat/:sessionId" component={Chat} />
+        <Route path="/chat/:type/:id" component={ChatRoom} />
         <Route path="/recommendations" component={Recommendations} />
         <Route path="/diary" component={Diary} />
         <Route path="/profile" component={Profile} />
