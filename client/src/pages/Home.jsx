@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAnonymousUser } from '../hooks/useAnonymousUser';
 import { Link } from 'wouter';
-import './Home.css';
+import '../styles/Home.css';
 
 export default function Home() {
   const { user } = useAnonymousUser();
