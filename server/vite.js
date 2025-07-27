@@ -17,14 +17,13 @@ export async function setupVite(app, server) {
       server: { 
         middlewareMode: true,
         hmr: { server },
-        host: '0.0.0.0',
-        origin: 'http://localhost:5000'
+        host: true,
+        allowedHosts: 'all'
       },
       appType: "spa",
       root: path.resolve("client"),
-      define: {
-        global: 'globalThis',
-      },
+      configFile: false,
+      envFile: false,
     });
 
     app.use(vite.middlewares);
