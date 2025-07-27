@@ -239,13 +239,31 @@ body {
   overflow: hidden;
 }
 
-/* 데스크톱에서 전체 화면 활용 */
+/* Desktop Layout */
 @media (min-width: 768px) {
+  body {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .desktop-sidebar {
+    flex-shrink: 0;
+  }
+  
   .app-container {
+    flex: 1;
     max-width: none;
-    width: 100vw;
+    width: calc(100vw - 200px);
     margin: 0;
     box-shadow: none;
+    overflow-y: auto;
+    height: 100vh;
+    transition: width 0.2s ease;
+  }
+  
+  body.sidebar-collapsed .app-container {
+    width: calc(100vw - 60px);
   }
 }
 

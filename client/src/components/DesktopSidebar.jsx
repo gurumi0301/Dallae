@@ -77,7 +77,7 @@ export default function DesktopSidebar() {
             className={`sidebar-nav-item ${location === item.path ? 'active' : ''}`}
           >
             <div className="nav-item-icon">{item.icon}</div>
-            <div className="nav-item-content">
+            <div className="nav-item-content nav-item-text">
               <span className="nav-item-label">{item.label}</span>
               <span className="nav-item-description">{item.description}</span>
             </div>
