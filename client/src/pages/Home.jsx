@@ -96,9 +96,7 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="emotion-section" style={{
-        marginTop: isScrolled ? '80px' : '0px'
-      }}>
+      <section className="emotion-section">
         <h2 className="section-title">지금 느끼는 감정</h2>
         <div className="emotion-grid">
           {emotions.map((emotion) => (
@@ -185,7 +183,6 @@ export default function Home() {
           margin-bottom: 40px;
           position: relative;
           z-index: 100;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .home-header.scrolled {
@@ -195,6 +192,14 @@ export default function Home() {
           right: 0;
           margin-bottom: 0;
           z-index: 1000;
+        }
+        
+        .emotion-section {
+          margin-top: 0;
+        }
+        
+        .home-header.scrolled + .emotion-section {
+          margin-top: 100px;
         }
 
         .greeting {
