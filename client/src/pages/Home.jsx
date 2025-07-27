@@ -65,25 +65,12 @@ export default function Home() {
       <div className="bg-decoration bg-decoration-3" style={{opacity: 0.1 * (1 - scrollProgress)}}></div>
       
       <header className={`home-header ${isScrolled ? 'scrolled' : ''}`}>
-        <div className="greeting" style={{
-          padding: `${24 - scrollProgress * 8}px 16px`,
-          borderRadius: `${20 - scrollProgress * 6}px`
-        }}>
-          <div className="greeting-icon" style={{
-            fontSize: `${32 - scrollProgress * 8}px`,
-            marginBottom: `${16 - scrollProgress * 6}px`
-          }}>🌈</div>
-          <h1 className="greeting-text" style={{
-            fontSize: `${26 - scrollProgress * 6}px`,
-            marginBottom: `${8 - scrollProgress * 4}px`
-          }}>
+        <div className="greeting">
+          <div className="greeting-icon">🌈</div>
+          <h1 className="greeting-text">
             안녕하세요, <span className="user-name">{user?.anonymousName}</span>님
           </h1>
-          <p className="greeting-subtitle" style={{
-            opacity: 1 - scrollProgress,
-            height: scrollProgress > 0.8 ? '0px' : 'auto',
-            overflow: 'hidden'
-          }}>오늘 기분은 어떠신가요?</p>
+          {!isScrolled && <p className="greeting-subtitle">오늘 기분은 어떠신가요?</p>}
         </div>
       </header>
 
@@ -194,13 +181,29 @@ export default function Home() {
           backdrop-filter: blur(10px);
           box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
           border: 1px solid rgba(255, 255, 255, 0.2);
-          transition: all 0.2s ease;
           margin: 0 auto;
+          padding: 24px 16px;
+          border-radius: 20px;
+        }
+
+        .home-header.scrolled .greeting {
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(20px);
+          box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          padding: 16px;
+          border-radius: 14px;
         }
 
         .greeting-icon {
-          transition: all 0.2s ease;
+          font-size: 32px;
+          margin-bottom: 16px;
           display: inline-block;
+        }
+
+        .home-header.scrolled .greeting-icon {
+          font-size: 24px;
+          margin-bottom: 8px;
         }
 
 
@@ -209,7 +212,13 @@ export default function Home() {
           font-weight: 700;
           color: var(--gray-800);
           line-height: 1.2;
-          transition: all 0.2s ease;
+          font-size: 26px;
+          margin-bottom: 8px;
+        }
+
+        .home-header.scrolled .greeting-text {
+          font-size: 20px;
+          margin-bottom: 0;
         }
 
         .user-name {
@@ -224,7 +233,6 @@ export default function Home() {
           color: var(--gray-600);
           font-size: 16px;
           font-weight: 500;
-          transition: all 0.2s ease;
         }
 
         .section-title {
