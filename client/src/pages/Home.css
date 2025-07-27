@@ -10,42 +10,42 @@
 /* Desktop responsive design */
 @media (min-width: 768px) {
   .home-container {
-    padding: 40px;
+    padding: 3vh 5vw;
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 60px;
+    grid-template-columns: 65% 35%;
+    gap: 4vw;
     align-items: start;
     min-height: 100vh;
-    width: 100%;
+    width: 100vw;
     box-sizing: border-box;
   }
 
   .home-header {
     grid-column: 1 / -1;
-    margin-bottom: 40px;
+    margin-bottom: 3vh;
   }
 
   .home-greeting {
-    max-width: 800px;
+    max-width: 60vw;
     width: 100%;
     margin: 0 auto;
-    padding: 40px 32px !important;
-    border-radius: 24px !important;
+    padding: 3vh 2vw !important;
+    border-radius: 1.5rem !important;
   }
 
   .home-greeting-icon {
-    font-size: 36px !important;
-    margin-bottom: 16px !important;
+    font-size: 2.5rem !important;
+    margin-bottom: 1rem !important;
   }
 
   .home-greeting-text {
-    font-size: 32px !important;
-    margin-bottom: 16px !important;
+    font-size: 2rem !important;
+    margin-bottom: 1rem !important;
   }
 
   .home-greeting-subtitle {
-    font-size: 18px;
-    margin-top: 12px;
+    font-size: 1.2rem;
+    margin-top: 0.8rem;
   }
 
   .home-emotion-section {
@@ -57,53 +57,55 @@
   }
 
   .home-section-title {
-    font-size: 28px;
+    font-size: 1.8rem;
     text-align: left;
-    margin-bottom: 32px;
+    margin-bottom: 2rem;
   }
 
   .home-emotion-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 1.5vw;
   }
 
   .home-emotion-btn {
-    padding: 28px 20px;
-    border-radius: 18px;
+    padding: 2vh 1.5vw;
+    border-radius: 1.2rem;
+    min-height: 12vh;
   }
 
   .home-emotion-emoji {
-    font-size: 36px;
-    margin-bottom: 10px;
+    font-size: 2.5rem;
+    margin-bottom: 0.8rem;
   }
 
   .home-emotion-name {
-    font-size: 16px;
+    font-size: 1rem;
   }
 
   .home-action-grid {
-    gap: 20px;
+    gap: 1.5vh;
   }
 
   .home-action-card {
-    padding: 28px;
-    border-radius: 18px;
+    padding: 2vh 1.5vw;
+    border-radius: 1.2rem;
+    min-height: 12vh;
   }
 
   .home-action-icon {
-    font-size: 36px;
-    min-width: 70px;
-    height: 70px;
-    margin-right: 20px;
+    font-size: 2.5rem;
+    min-width: 4.5rem;
+    height: 4.5rem;
+    margin-right: 1.2rem;
   }
 
   .home-action-title {
-    font-size: 20px;
-    margin-bottom: 6px;
+    font-size: 1.3rem;
+    margin-bottom: 0.4rem;
   }
 
   .home-action-description {
-    font-size: 16px;
+    font-size: 1rem;
   }
 
   /* Desktop scroll adjustments */

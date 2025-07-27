@@ -125,6 +125,8 @@ body {
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   overflow-x: hidden;
+  width: 100vw;
+  min-height: 100vh;
 }
 
 /* Desktop background for full-screen design */
@@ -144,9 +146,9 @@ body {
 
   /* 다른 페이지들도 사이드바 공간 확보 */
   .app-container > :not(.desktop-sidebar):not(.bottom-nav) {
-    margin-left: 320px;
-    width: calc(100vw - 320px);
-    max-width: calc(100vw - 320px);
+    margin-left: 20vw;
+    width: 80vw;
+    max-width: 80vw;
   }
 }
 
@@ -164,7 +166,7 @@ body {
 }
 
 #root {
-  width: 100%;
+  width: 100vw;
   min-height: 100vh;
 }
 
