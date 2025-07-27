@@ -1,87 +1,202 @@
 import React, { useState } from 'react';
 import { useAnonymousUser } from '../hooks/useAnonymousUser';
+import { useLocation } from 'wouter';
 import '../styles/Recommendations.css';
 
 export default function Recommendations() {
   const { user } = useAnonymousUser();
+  const [location, setLocation] = useLocation();
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [activeTab, setActiveTab] = useState('music');
+
+  const tabs = [
+    { id: 'music', name: '음악', emoji: '🎵' },
+    { id: 'book', name: '도서', emoji: '📚' },
+    { id: 'movie', name: '영화', emoji: '🎬' },
+    { id: 'activity', name: '활동', emoji: '🏃‍♂️' },
+    { id: 'meditation', name: '명상', emoji: '🧘‍♀️' }
+  ];
 
   const categories = [
     { id: 'all', name: '전체', emoji: '🌟' },
-    { id: 'meditation', name: '명상', emoji: '🧘‍♀️' },
-    { id: 'exercise', name: '운동', emoji: '🏃‍♂️' },
-    { id: 'reading', name: '독서', emoji: '📖' },
-    { id: 'music', name: '음악', emoji: '🎵' },
-    { id: 'nature', name: '자연', emoji: '🌿' }
+    { id: 'healing', name: '힐링', emoji: '🌸' },
+    { id: 'energetic', name: '에너지', emoji: '⚡' },
+    { id: 'calm', name: '평온', emoji: '🌊' },
+    { id: 'uplifting', name: '기분전환', emoji: '☀️' },
+    { id: 'focus', name: '집중', emoji: '🎯' }
   ];
 
-  const recommendations = [
-    {
-      id: 1,
-      title: '5분 호흡 명상',
-      description: '간단한 호흡법으로 마음을 진정시켜보세요',
-      category: 'meditation',
-      duration: '5분',
-      difficulty: '쉬움',
-      emoji: '🌸'
-    },
-    {
-      id: 2,
-      title: '감사 일기 쓰기',
-      description: '오늘 감사한 세 가지를 적어보세요',
-      category: 'reading',
-      duration: '10분',
-      difficulty: '쉬움',
-      emoji: '📝'
-    },
-    {
-      id: 3,
-      title: '실내 스트레칭',
-      description: '몸과 마음을 이완시키는 가벼운 스트레칭',
-      category: 'exercise',
-      duration: '15분',
-      difficulty: '보통',
-      emoji: '🤸‍♀️'
-    },
-    {
-      id: 4,
-      title: '클래식 음악 감상',
-      description: '마음을 편안하게 해주는 클래식 음악',
-      category: 'music',
-      duration: '20분',
-      difficulty: '쉬움',
-      emoji: '🎼'
-    },
-    {
-      id: 5,
-      title: '산책하기',
-      description: '집 근처를 천천히 걸으며 생각 정리하기',
-      category: 'nature',
-      duration: '30분',
-      difficulty: '쉬움',
-      emoji: '🚶‍♀️'
-    },
-    {
-      id: 6,
-      title: '마음챙김 식사',
-      description: '천천히 음미하며 의식적으로 식사하기',
-      category: 'meditation',
-      duration: '25분',
-      difficulty: '보통',
-      emoji: '🍽️'
+  const recommendationData = {
+    music: [
+      {
+        id: 1,
+        title: '클래식 힐링 플레이리스트',
+        description: '마음을 편안하게 해주는 클래식 명곡들',
+        category: 'healing',
+        duration: '60분',
+        difficulty: '쉬움',
+        emoji: '🎼'
+      },
+      {
+        id: 2,
+        title: '자연 소리와 명상 음악',
+        description: '빗소리, 파도소리와 함께하는 명상 음악',
+        category: 'calm',
+        duration: '30분',
+        difficulty: '쉬움',
+        emoji: '🌊'
+      },
+      {
+        id: 3,
+        title: '업비트 팝송 모음',
+        description: '기분을 밝게 만들어주는 신나는 팝송들',
+        category: 'uplifting',
+        duration: '45분',
+        difficulty: '쉬움',
+        emoji: '🎉'
+      },
+      {
+        id: 4,
+        title: '집중을 위한 로파이',
+        description: '공부나 일할 때 집중력을 높여주는 로파이 음악',
+        category: 'focus',
+        duration: '90분',
+        difficulty: '쉬움',
+        emoji: '🎧'
+      }
+    ],
+    book: [
+      {
+        id: 5,
+        title: '마음챙김 명상',
+        description: '현재 순간에 집중하는 마음챙김의 기술',
+        category: 'calm',
+        duration: '200페이지',
+        difficulty: '보통',
+        emoji: '📖'
+      },
+      {
+        id: 6,
+        title: '감정의 치유',
+        description: '상처받은 마음을 치유하는 방법들',
+        category: 'healing',
+        duration: '180페이지',
+        difficulty: '쉬움',
+        emoji: '💝'
+      },
+      {
+        id: 7,
+        title: '긍정의 힘',
+        description: '삶을 변화시키는 긍정적 사고의 힘',
+        category: 'uplifting',
+        duration: '250페이지',
+        difficulty: '쉬움',
+        emoji: '✨'
+      }
+    ],
+    movie: [
+      {
+        id: 8,
+        title: '센과 치히로의 행방불명',
+        description: '마음을 치유해주는 지브리 애니메이션',
+        category: 'healing',
+        duration: '125분',
+        difficulty: '쉬움',
+        emoji: '🏰'
+      },
+      {
+        id: 9,
+        title: '인사이드 아웃',
+        description: '감정에 대해 이해할 수 있는 픽사 애니메이션',
+        category: 'uplifting',
+        duration: '95분',
+        difficulty: '쉬움',
+        emoji: '🧠'
+      },
+      {
+        id: 10,
+        title: '리틀 포레스트',
+        description: '자연 속에서 힐링하는 일본 영화',
+        category: 'calm',
+        duration: '103분',
+        difficulty: '쉬움',
+        emoji: '🌿'
+      }
+    ],
+    activity: [
+      {
+        id: 11,
+        title: '5분 스트레칭',
+        description: '몸과 마음을 이완시키는 간단한 스트레칭',
+        category: 'energetic',
+        duration: '5분',
+        difficulty: '쉬움',
+        emoji: '🤸‍♀️'
+      },
+      {
+        id: 12,
+        title: '산책하기',
+        description: '근처 공원이나 동네를 여유롭게 걸어보세요',
+        category: 'calm',
+        duration: '20분',
+        difficulty: '쉬움',
+        emoji: '🚶‍♀️'
+      },
+      {
+        id: 13,
+        title: '그림 그리기',
+        description: '마음속 감정을 자유롭게 표현해보세요',
+        category: 'healing',
+        duration: '30분',
+        difficulty: '보통',
+        emoji: '🎨'
+      }
+    ],
+    meditation: [
+      {
+        id: 14,
+        title: '호흡 명상',
+        description: '깊은 호흡으로 마음을 진정시키는 명상',
+        category: 'calm',
+        duration: '10분',
+        difficulty: '쉬움',
+        emoji: '🫁'
+      },
+      {
+        id: 15,
+        title: '바디스캔 명상',
+        description: '몸의 감각을 차례로 느껴보는 명상',
+        category: 'focus',
+        duration: '15분',
+        difficulty: '보통',
+        emoji: '🧘‍♀️'
+      },
+      {
+        id: 16,
+        title: '자애명상',
+        description: '자신과 타인에게 사랑을 보내는 명상',
+        category: 'healing',
+        duration: '20분',
+        difficulty: '보통',
+        emoji: '💗'
+      }
+    ]
+  };
+
+  const getCurrentRecommendations = () => {
+    const tabRecommendations = recommendationData[activeTab] || [];
+    if (selectedCategory === 'all') {
+      return tabRecommendations;
     }
-  ];
-
-  const filteredRecommendations = selectedCategory === 'all' 
-    ? recommendations 
-    : recommendations.filter(rec => rec.category === selectedCategory);
+    return tabRecommendations.filter(item => item.category === selectedCategory);
+  };
 
   const getDifficultyColor = (difficulty) => {
     switch (difficulty) {
-      case '쉬움': return 'bg-mint';
-      case '보통': return 'bg-peach';
-      case '어려움': return 'bg-soft-blue';
-      default: return 'bg-gray-400';
+      case '쉬움': return 'background: linear-gradient(135deg, var(--mint), var(--mint-light));';
+      case '보통': return 'background: linear-gradient(135deg, var(--soft-blue), var(--soft-blue-light));';
+      case '어려움': return 'background: linear-gradient(135deg, var(--coral), var(--coral-light));';
+      default: return 'background: var(--gray-400);';
     }
   };
 
@@ -89,18 +204,36 @@ export default function Recommendations() {
     <div className="recommendations-container">
       <header className="recommendations-header">
         <h1 className="page-title">추천</h1>
-        <p className="page-subtitle">
-          안녕하세요, {user?.anonymousName}님! 오늘을 위한 추천을 확인해보세요
-        </p>
+        <p className="page-subtitle">마음에 도움이 되는 콘텐츠를 찾아보세요</p>
       </header>
 
+      {/* 탭 네비게이션 */}
+      <section className="tabs-section">
+        <div className="tabs-scroll">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => {
+                setActiveTab(tab.id);
+                setSelectedCategory('all');
+              }}
+              className={`tab-btn ${activeTab === tab.id ? 'active' : ''}`}
+            >
+              <span className="tab-emoji">{tab.emoji}</span>
+              <span className="tab-name">{tab.name}</span>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* 카테고리 필터 */}
       <section className="categories-section">
         <div className="categories-scroll">
           {categories.map((category) => (
             <button
               key={category.id}
-              className={`category-btn ${selectedCategory === category.id ? 'active' : ''}`}
               onClick={() => setSelectedCategory(category.id)}
+              className={`category-btn ${selectedCategory === category.id ? 'active' : ''}`}
             >
               <span className="category-emoji">{category.emoji}</span>
               <span className="category-name">{category.name}</span>
@@ -109,30 +242,42 @@ export default function Recommendations() {
         </div>
       </section>
 
+      {/* 추천 콘텐츠 */}
       <section className="recommendations-section">
         <h2 className="section-title">
-          {selectedCategory === 'all' ? '모든 추천' : categories.find(c => c.id === selectedCategory)?.name + ' 추천'}
+          {tabs.find(tab => tab.id === activeTab)?.name} 추천
+          {selectedCategory !== 'all' && ` - ${categories.find(cat => cat.id === selectedCategory)?.name}`}
         </h2>
+        
         <div className="recommendations-grid">
-          {filteredRecommendations.map((recommendation) => (
-            <div key={recommendation.id} className="recommendation-card">
+          {getCurrentRecommendations().map((item) => (
+            <div key={item.id} className="recommendation-card">
               <div className="recommendation-header">
-                <span className="recommendation-emoji">{recommendation.emoji}</span>
+                <span className="recommendation-emoji">{item.emoji}</span>
                 <div className="recommendation-badges">
-                  <span className={`difficulty-badge ${getDifficultyColor(recommendation.difficulty)}`}>
-                    {recommendation.difficulty}
+                  <span 
+                    className="difficulty-badge"
+                    style={{ [getDifficultyColor(item.difficulty).split(':')[0]]: getDifficultyColor(item.difficulty).split(':')[1] }}
+                  >
+                    {item.difficulty}
                   </span>
-                  <span className="duration-badge">{recommendation.duration}</span>
+                  <span className="duration-badge">{item.duration}</span>
                 </div>
               </div>
-              <h3 className="recommendation-title">{recommendation.title}</h3>
-              <p className="recommendation-description">{recommendation.description}</p>
-              <button className="recommendation-button btn btn-primary">
+              <h3 className="recommendation-title">{item.title}</h3>
+              <p className="recommendation-description">{item.description}</p>
+              <button className="btn btn-primary recommendation-button">
                 시작하기
               </button>
             </div>
           ))}
         </div>
+        
+        {getCurrentRecommendations().length === 0 && (
+          <div className="empty-state">
+            <p>선택한 카테고리에 해당하는 추천 콘텐츠가 없습니다.</p>
+          </div>
+        )}
       </section>
 
       <div className="bottom-spacer"></div>
