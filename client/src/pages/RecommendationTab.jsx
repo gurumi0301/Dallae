@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAnonymousUser } from '../hooks/useAnonymousUser';
 import { useRoute } from 'wouter';
 import '../styles/Recommendations.css';
@@ -7,6 +7,17 @@ export default function RecommendationTab() {
   const { user } = useAnonymousUser();
   const [match, params] = useRoute('/recommendations/:type');
   const activeTab = params?.type || 'music';
+  const [isLoading, setIsLoading] = useState(false);
+
+  // 탭 변경 시 로딩 시뮬레이션
+  useEffect(() => {
+    setIsLoading(true);
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
+
+    return () => clearTimeout(timer);
+  }, [activeTab]);
 
   const tabs = [
     { id: 'music', name: '음악', emoji: '🎵' },
@@ -199,29 +210,36 @@ export default function RecommendationTab() {
       <section className="recommendations-section">
         <h2 className="section-title">{currentTab?.name} 추천</h2>
         
-        <div className="recommendations-grid">
-          {getCurrentRecommendations().map((item) => (
-            <div key={item.id} className="recommendation-card">
-              <div className="recommendation-header">
-                <span className="recommendation-emoji">{item.emoji}</span>
-                <div className="recommendation-badges">
-                  <span 
-                    className="difficulty-badge"
-                    style={getDifficultyColor(item.difficulty)}
-                  >
-                    {item.difficulty}
-                  </span>
-                  <span className="duration-badge">{item.duration}</span>
+        {isLoading ? (
+          <div className="recommendations-loading">
+            <div className="loading-spinner"></div>
+            <p className="loading-text">{currentTab?.name} 추천을 불러오는 중...</p>
+          </div>
+        ) : (
+          <div className="recommendations-grid">
+            {getCurrentRecommendations().map((item) => (
+              <div key={item.id} className="recommendation-card">
+                <div className="recommendation-header">
+                  <span className="recommendation-emoji">{item.emoji}</span>
+                  <div className="recommendation-badges">
+                    <span 
+                      className="difficulty-badge"
+                      style={getDifficultyColor(item.difficulty)}
+                    >
+                      {item.difficulty}
+                    </span>
+                    <span className="duration-badge">{item.duration}</span>
+                  </div>
                 </div>
+                <h3 className="recommendation-title">{item.title}</h3>
+                <p className="recommendation-description">{item.description}</p>
+                <button className="btn btn-primary recommendation-button">
+                  시작하기
+                </button>
               </div>
-              <h3 className="recommendation-title">{item.title}</h3>
-              <p className="recommendation-description">{item.description}</p>
-              <button className="btn btn-primary recommendation-button">
-                시작하기
-              </button>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </section>
 
       <div className="bottom-spacer"></div>
