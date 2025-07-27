@@ -6,13 +6,13 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use((req: any, res: any, next: any) => {
+app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
-  let capturedJsonResponse: any = undefined;
+  let capturedJsonResponse = undefined;
 
   const originalResJson = res.json;
-  res.json = function (bodyJson: any, ...args: any[]) {
+  res.json = function (bodyJson, ...args) {
     capturedJsonResponse = bodyJson;
     return originalResJson.apply(res, [bodyJson, ...args]);
   };
@@ -39,7 +39,7 @@ app.use((req: any, res: any, next: any) => {
 (async () => {
   const server = await registerRoutes(app);
 
-  app.use((err: any, _req: any, res: any, _next: any) => {
+  app.use((err, _req, res, _next) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
 

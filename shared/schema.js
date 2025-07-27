@@ -1,126 +1,130 @@
-import { pgTable, text, serial, integer, boolean, timestamp, jsonb } from "drizzle-orm/pg-core";
-import { relations } from "drizzle-orm";
-import { createInsertSchema } from "drizzle-zod";
+import { sql } from 'drizzle-orm';
+import {
+  pgTable,
+  serial,
+  varchar,
+  text,
+  timestamp,
+  integer,
+  boolean,
+  jsonb
+} from "drizzle-orm/pg-core";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 
+// 사용자 테이블
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
-  anonymousName: text("anonymous_name").notNull(),
-  sessionId: text("session_id").notNull().unique(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+  username: varchar("username", { length: 50 }).unique().notNull(),
+  password: varchar("password", { length: 255 }).notNull(),
+  realName: varchar("real_name", { length: 100 }).notNull(),
+  email: varchar("email", { length: 255 }).unique(),
+  phone: varchar("phone", { length: 20 }),
+  isVerified: boolean("is_verified").default(false),
+  verificationToken: varchar("verification_token", { length: 255 }),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
-export const emotionEntries = pgTable("emotion_entries", {
+// 익명 사용자 테이블 (기존 시스템 유지)
+export const anonymousUsers = pgTable("anonymous_users", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").references(() => users.id).notNull(),
-  emotion: text("emotion").notNull(), // happy, sad, angry, anxious, excited, tired, etc.
-  intensity: integer("intensity").notNull(), // 1-10 scale
-  content: text("content"), // diary content
-  gratefulFor: text("grateful_for"),
-  tomorrowGoal: text("tomorrow_goal"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+  sessionId: varchar("session_id", { length: 255 }).unique().notNull(),
+  anonymousName: varchar("anonymous_name", { length: 100 }).notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const chatSessions = pgTable("chat_sessions", {
+// 감정 기록 테이블
+export const emotions = pgTable("emotions", {
   id: serial("id").primaryKey(),
-  user1Id: integer("user1_id").references(() => users.id).notNull(),
-  user2Id: integer("user2_id").references(() => users.id),
-  isActive: boolean("is_active").default(true).notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  endedAt: timestamp("ended_at"),
+  userId: integer("user_id"),
+  anonymousUserId: integer("anonymous_user_id"),
+  emotion: varchar("emotion", { length: 50 }).notNull(),
+  intensity: integer("intensity").notNull(),
+  note: text("note"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
+// 심리검사 테이블
+export const psychologyTests = pgTable("psychology_tests", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 200 }).notNull(),
+  description: text("description"),
+  questions: jsonb("questions").notNull(), // JSON 형태로 질문들 저장
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// 심리검사 결과 테이블
+export const psychologyTestResults = pgTable("psychology_test_results", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull(),
+  testId: integer("test_id").notNull(),
+  answers: jsonb("answers").notNull(), // JSON 형태로 답변들 저장
+  results: jsonb("results").notNull(), // JSON 형태로 결과 저장
+  score: integer("score"),
+  completedAt: timestamp("completed_at").defaultNow(),
+});
+
+// 채팅 메시지 테이블 (기존 시스템 확장)
 export const chatMessages = pgTable("chat_messages", {
   id: serial("id").primaryKey(),
-  sessionId: integer("session_id").references(() => chatSessions.id).notNull(),
-  senderId: integer("sender_id").references(() => users.id).notNull(),
-  content: text("content").notNull(),
-  isAiMessage: boolean("is_ai_message").default(false).notNull(),
-  aiComfortType: text("ai_comfort_type"), // emotion_analysis, comfort, encouragement
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+  senderId: integer("sender_id"),
+  anonymousSenderId: integer("anonymous_sender_id"),
+  receiverId: integer("receiver_id"),
+  anonymousReceiverId: integer("anonymous_receiver_id"),
+  message: text("message").notNull(),
+  messageType: varchar("message_type", { length: 20 }).default("text"),
+  roomId: varchar("room_id", { length: 100 }).notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const emotionAnalysis = pgTable("emotion_analysis", {
-  id: serial("id").primaryKey(),
-  userId: integer("user_id").references(() => users.id).notNull(),
-  content: text("content").notNull(),
-  detectedEmotion: text("detected_emotion").notNull(),
-  confidence: integer("confidence").notNull(), // 0-100
-  aiResponse: text("ai_response").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+// Zod 스키마 생성
+export const insertUserSchema = createInsertSchema(users, {
+  username: z.string().min(3, "아이디는 3자 이상이어야 합니다").max(50),
+  password: z.string().min(6, "비밀번호는 6자 이상이어야 합니다"),
+  realName: z.string().min(2, "실명은 2자 이상이어야 합니다").max(100),
+  email: z.string().email("올바른 이메일 형식이 아닙니다").optional(),
+  phone: z.string().optional(),
+}).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+  isVerified: true,
+  verificationToken: true,
 });
 
-// Relations
-export const usersRelations = relations(users, ({ many }) => ({
-  emotionEntries: many(emotionEntries),
-  chatSessions1: many(chatSessions, { relationName: "user1" }),
-  chatSessions2: many(chatSessions, { relationName: "user2" }),
-  chatMessages: many(chatMessages),
-  emotionAnalyses: many(emotionAnalysis),
-}));
+export const loginSchema = z.object({
+  username: z.string().min(1, "아이디를 입력해주세요"),
+  password: z.string().min(1, "비밀번호를 입력해주세요"),
+});
 
-export const emotionEntriesRelations = relations(emotionEntries, ({ one }) => ({
-  user: one(users, {
-    fields: [emotionEntries.userId],
-    references: [users.id],
-  }),
-}));
-
-export const chatSessionsRelations = relations(chatSessions, ({ one, many }) => ({
-  user1: one(users, {
-    fields: [chatSessions.user1Id],
-    references: [users.id],
-    relationName: "user1",
-  }),
-  user2: one(users, {
-    fields: [chatSessions.user2Id],
-    references: [users.id],
-    relationName: "user2",
-  }),
-  messages: many(chatMessages),
-}));
-
-export const chatMessagesRelations = relations(chatMessages, ({ one }) => ({
-  session: one(chatSessions, {
-    fields: [chatMessages.sessionId],
-    references: [chatSessions.id],
-  }),
-  sender: one(users, {
-    fields: [chatMessages.senderId],
-    references: [users.id],
-  }),
-}));
-
-export const emotionAnalysisRelations = relations(emotionAnalysis, ({ one }) => ({
-  user: one(users, {
-    fields: [emotionAnalysis.userId],
-    references: [users.id],
-  }),
-}));
-
-// Insert schemas
-export const insertUserSchema = createInsertSchema(users).omit({
+export const insertAnonymousUserSchema = createInsertSchema(anonymousUsers).omit({
   id: true,
   createdAt: true,
 });
 
-export const insertEmotionEntrySchema = createInsertSchema(emotionEntries).omit({
+export const insertEmotionSchema = createInsertSchema(emotions).omit({
   id: true,
   createdAt: true,
 });
 
-export const insertChatSessionSchema = createInsertSchema(chatSessions).omit({
+export const insertPsychologyTestResultSchema = createInsertSchema(psychologyTestResults).omit({
   id: true,
-  createdAt: true,
-  endedAt: true,
+  completedAt: true,
 });
 
-export const insertChatMessageSchema = createInsertSchema(chatMessages).omit({
-  id: true,
-  createdAt: true,
-});
-
-export const insertEmotionAnalysisSchema = createInsertSchema(emotionAnalysis).omit({
-  id: true,
-  createdAt: true,
-});
+// JavaScript에서는 타입 정의 대신 JSDoc 주석으로 대체
+/**
+ * @typedef {Object} User - 사용자 타입
+ * @typedef {Object} InsertUser - 사용자 입력 타입
+ * @typedef {Object} LoginUser - 로그인 타입
+ * @typedef {Object} AnonymousUser - 익명 사용자 타입
+ * @typedef {Object} InsertAnonymousUser - 익명 사용자 입력 타입
+ * @typedef {Object} Emotion - 감정 타입
+ * @typedef {Object} InsertEmotion - 감정 입력 타입
+ * @typedef {Object} PsychologyTest - 심리검사 타입
+ * @typedef {Object} PsychologyTestResult - 심리검사 결과 타입
+ * @typedef {Object} InsertPsychologyTestResult - 심리검사 결과 입력 타입
+ * @typedef {Object} ChatMessage - 채팅 메시지 타입
+ */

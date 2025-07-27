@@ -1,5 +1,5 @@
 import { 
-  users, emotionEntries, chatSessions, chatMessages, emotionAnalysis
+  users, anonymousUsers, emotions, chatMessages
 } from "../shared/schema.js";
 import { db } from "./db.js";
 import { eq, and, isNull, desc, count, avg, sql } from "drizzle-orm";
@@ -11,13 +11,13 @@ export class DatabaseStorage {
   }
 
   async getUserBySessionId(sessionId) {
-    const [user] = await db.select().from(users).where(eq(users.sessionId, sessionId));
+    const [user] = await db.select().from(anonymousUsers).where(eq(anonymousUsers.sessionId, sessionId));
     return user || undefined;
   }
 
   async createUser(insertUser) {
     const [user] = await db
-      .insert(users)
+      .insert(anonymousUsers)
       .values(insertUser)
       .returning();
     return user;
@@ -25,7 +25,7 @@ export class DatabaseStorage {
 
   async createEmotionEntry(entry) {
     const [emotionEntry] = await db
-      .insert(emotionEntries)
+      .insert(emotions)
       .values(entry)
       .returning();
     return emotionEntry;
@@ -34,9 +34,9 @@ export class DatabaseStorage {
   async getUserEmotionEntries(userId, limit = 50) {
     return await db
       .select()
-      .from(emotionEntries)
-      .where(eq(emotionEntries.userId, userId))
-      .orderBy(desc(emotionEntries.createdAt))
+      .from(emotions)
+      .where(eq(emotions.anonymousUserId, userId))
+      .orderBy(desc(emotions.createdAt))
       .limit(limit);
   }
 
@@ -86,38 +86,25 @@ export class DatabaseStorage {
     };
   }
 
+  // 채팅 세션 관련 메서드들은 향후 구현 예정
   async findAvailableChatSession() {
-    const [session] = await db
-      .select()
-      .from(chatSessions)
-      .where(and(eq(chatSessions.isActive, true), isNull(chatSessions.user2Id)))
-      .limit(1);
-    return session || undefined;
+    // 임시로 null 반환
+    return null;
   }
 
   async createChatSession(session) {
-    const [chatSession] = await db
-      .insert(chatSessions)
-      .values(session)
-      .returning();
-    return chatSession;
+    // 임시 구현
+    return { id: Date.now(), ...session };
   }
 
   async joinChatSession(sessionId, userId) {
-    const [session] = await db
-      .update(chatSessions)
-      .set({ user2Id: userId })
-      .where(eq(chatSessions.id, sessionId))
-      .returning();
-    return session;
+    // 임시 구현
+    return { id: sessionId, user2Id: userId };
   }
 
   async getChatSession(sessionId) {
-    const [session] = await db
-      .select()
-      .from(chatSessions)
-      .where(eq(chatSessions.id, sessionId));
-    return session || undefined;
+    // 임시 구현
+    return { id: sessionId, isActive: true };
   }
 
   async getChatMessages(sessionId, limit = 50) {

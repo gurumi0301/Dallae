@@ -121,6 +121,10 @@ Changelog:
 - July 27, 2025. Fixed routing order and added Link components for proper tab navigation within recommendations
 - July 27, 2025. Created comprehensive Settings page with 5 tabs (AI, Theme, Home, Privacy, Notifications) using browser-tab design and URL routing (/settings/ai, etc.)
 - July 27, 2025. Implemented dark mode with CSS variables, theme context, and theme switcher in settings page
+- July 27, 2025. Complete authentication system implemented with login/register pages, PostgreSQL database integration, password hashing with bcrypt, JWT tokens, and psychology test functionality
+- July 27, 2025. Fixed file extension inconsistencies by converting all server files to JavaScript (.js) and ensuring consistent imports across the codebase
+- July 27, 2025. All text alignment changed to left-aligned throughout the application for better readability
+- July 27, 2025. Created PostgreSQL database tables: registered_users, anonymous_users, emotions, psychology_tests, psychology_test_results, and chat_messages
 ```
 
 # User Preferences

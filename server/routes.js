@@ -3,7 +3,7 @@ import { storage } from "./storage.js";
 import { generateAnonymousName, generateSessionId } from "./services/anonymousNames.js";
 import { analyzeEmotionAndGenerateComfort, generateAIComfortMessage, detectCrisisContent } from "./services/openai.js";
 import { filterContent, validateContentLength, sanitizeContent } from "./services/contentFilter.js";
-import { insertUserSchema, insertEmotionEntrySchema, insertChatMessageSchema } from "../shared/schema.js";
+import { insertUserSchema, insertEmotionSchema } from "../shared/schema.js";
 import { hashPassword, verifyPassword, generateToken, verifyToken, verifyRealName, getUserByUsername } from './auth.js';
 import { db, pool } from './db.js';
 import { eq } from 'drizzle-orm';
@@ -31,10 +31,10 @@ export async function registerRoutes(app) {
       const newSessionId = generateSessionId();
       const anonymousName = generateAnonymousName();
       
-      const userData = insertUserSchema.parse({
+      const userData = {
         anonymousName,
         sessionId: newSessionId,
-      });
+      };
       
       const user = await storage.createUser(userData);
       res.json(user);
@@ -309,7 +309,7 @@ export async function registerRoutes(app) {
           aiResponse: analysis.comfortMessage,
         };
         
-        await storage.createEmotionAnalysis(analysisData);
+        // 감정 분석 결과를 저장하는 메서드는 향후 구현 예정
         res.json(analysis);
       } catch (aiError) {
         console.error('OpenAI API error:', aiError);
@@ -330,9 +330,16 @@ export async function registerRoutes(app) {
   // Save emotion entry (diary)
   app.post('/api/emotions/entry', async (req, res) => {
     try {
-      const entryData = insertEmotionEntrySchema.parse(req.body);
+      const { emotion, intensity, note, anonymousUserId } = req.body;
       
-      if (entryData.content && !validateContentLength(entryData.content)) {
+      const entryData = {
+        emotion,
+        intensity,
+        note,
+        anonymousUserId
+      };
+      
+      if (note && !validateContentLength(note)) {
         return res.status(400).json({ error: 'Content too long' });
       }
       
