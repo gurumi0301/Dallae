@@ -117,6 +117,8 @@ Changelog:
 - July 27, 2025. Organized CSS files into src/styles folder and implemented functional chat messaging system with real-time demo responses
 - July 27, 2025. Restructured chat system: Chat.jsx for partner finding, ChatRoom.jsx for actual chatting with /chat/(type)/id routing
 - July 27, 2025. Added tab-based recommendations system with music, book, movie, activity, and meditation categories
+- July 27, 2025. Implemented URL-based routing for recommendation tabs (/recommendations/music etc.) with browser-tab style design
+- July 27, 2025. Fixed routing order and added Link components for proper tab navigation within recommendations
 ```
 
 # User Preferences

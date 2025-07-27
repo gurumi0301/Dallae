@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAnonymousUser } from '../hooks/useAnonymousUser';
-import { useRoute } from 'wouter';
+import { useRoute, Link } from 'wouter';
 import '../styles/Recommendations.css';
 
 export default function RecommendationTab() {
@@ -198,14 +198,14 @@ export default function RecommendationTab() {
       <section className="tabs-section">
         <div className="browser-tabs">
           {tabs.map((tab) => (
-            <a
+            <Link
               key={tab.id}
               href={`/recommendations/${tab.id}`}
               className={`browser-tab ${activeTab === tab.id ? 'active' : ''}`}
             >
               <span className="tab-emoji">{tab.emoji}</span>
               <span className="tab-name">{tab.name}</span>
-            </a>
+            </Link>
           ))}
         </div>
       </section>
