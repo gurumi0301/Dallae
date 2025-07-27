@@ -176,6 +176,21 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   margin: 0 auto;
   max-width: 400px;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-greeting-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.3;
+  z-index: -1;
 }
 
 .home-header.scrolled .home-greeting {
@@ -187,12 +202,17 @@
 
 .home-greeting-icon {
   display: inline-block;
+  position: relative;
+  z-index: 1;
 }
 
 .home-greeting-text {
   font-weight: 700;
   color: var(--gray-800);
   line-height: 1.2;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
 }
 
 .home-user-name {
@@ -207,6 +227,8 @@
   color: var(--gray-600);
   font-size: 16px;
   font-weight: 500;
+  position: relative;
+  z-index: 1;
 }
 
 .home-section-title {
@@ -324,6 +346,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 1;
 }
 
 .home-greeting-message.fade-in {

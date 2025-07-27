@@ -98,9 +98,23 @@ export default function Home() {
   const scrollProgress = Math.min(scrollY / 150, 1); // 150px까지 완전 변환
   const isScrolled = scrollY > 30;
 
+  const formatDateTime = () => {
+    const today = currentTime.toLocaleDateString('ko-KR', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric',
+      weekday: 'long'
+    });
+    const time = currentTime.toLocaleTimeString('ko-KR', { 
+      hour: '2-digit', 
+      minute: '2-digit' 
+    });
+    return `${today} ${time}`;
+  };
+
   const messages = [
     { type: 'greeting', content: `안녕하세요, ${user?.anonymousName}님` },
-    { type: 'time', content: `현재 시간 ${currentTime.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })}` },
+    { type: 'datetime', content: formatDateTime() },
     { type: 'weather', content: weather ? `${weather.description}, ${weather.temp}°C` : '날씨 정보를 가져오는 중...' }
   ];
 
@@ -165,12 +179,12 @@ export default function Home() {
       <header className={`home-header ${isScrolled ? 'scrolled' : ''}`}>
         <div className="home-greeting" style={{
           padding: `${24 - scrollProgress * 8}px 16px`,
-          borderRadius: `${20 - scrollProgress * 6}px`,
-          backgroundImage: `linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7)), url("${currentBgImage}")`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          transition: 'background-image 0.5s ease-in-out'
+          borderRadius: `${20 - scrollProgress * 6}px`
         }}>
+          <div className="home-greeting-bg" style={{
+            backgroundImage: `url("${currentBgImage}")`,
+            transition: 'background-image 0.5s ease-in-out'
+          }}></div>
           <div className="home-greeting-icon" style={{
             fontSize: `${32 - scrollProgress * 8}px`,
             marginBottom: `${16 - scrollProgress * 8}px`
@@ -183,7 +197,7 @@ export default function Home() {
               {currentMessage.type === 'greeting' && (
                 <>안녕하세요, <span className="home-user-name">{user?.anonymousName}</span>님</>
               )}
-              {currentMessage.type === 'time' && currentMessage.content}
+              {currentMessage.type === 'datetime' && currentMessage.content}
               {currentMessage.type === 'weather' && currentMessage.content}
             </h1>
           </div>
