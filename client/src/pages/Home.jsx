@@ -72,6 +72,10 @@ export default function Home() {
       <div className="bg-decoration bg-decoration-2" style={{opacity: 0.1 * (1 - scrollProgress)}}></div>
       <div className="bg-decoration bg-decoration-3" style={{opacity: 0.1 * (1 - scrollProgress)}}></div>
       
+      <div className="header-spacer" style={{
+        height: isScrolled ? '120px' : '0px'
+      }}></div>
+      
       <header className={`home-header ${isScrolled ? 'scrolled' : ''}`}>
         <div className="greeting" style={{
           padding: `${24 - scrollProgress * 8}px 16px`,
@@ -194,12 +198,8 @@ export default function Home() {
           z-index: 1000;
         }
         
-        .emotion-section {
-          margin-top: 0;
-        }
-        
-        .home-header.scrolled + .emotion-section {
-          margin-top: 100px;
+        .header-spacer {
+          transition: none;
         }
 
         .greeting {
