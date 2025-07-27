@@ -79,7 +79,6 @@ export default function DesktopSidebar() {
             <div className="nav-item-icon">{item.icon}</div>
             <div className="nav-item-content">
               <span className="nav-item-title">{item.label}</span>
-              <span className="nav-item-desc">{item.description}</span>
             </div>
           </Link>
         ))}

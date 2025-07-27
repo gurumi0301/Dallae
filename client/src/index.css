@@ -146,9 +146,9 @@ body {
 
   /* 다른 페이지들도 사이드바 공간 확보 */
   .app-container > :not(.desktop-sidebar):not(.bottom-nav) {
-    margin-left: 200px;
-    width: calc(100vw - 200px);
-    max-width: calc(100vw - 200px);
+    margin-left: 160px;
+    width: calc(100vw - 160px);
+    max-width: calc(100vw - 160px);
     transition: margin-left 0.3s ease, width 0.3s ease;
     overflow-y: auto;
     height: 100vh;
