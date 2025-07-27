@@ -66,20 +66,25 @@ export default function Home() {
       
       <header className={`home-header ${isScrolled ? 'scrolled' : ''}`}>
         <div className="greeting" style={{
-          padding: isScrolled ? '16px' : '24px 16px',
-          borderRadius: isScrolled ? '14px' : '20px'
+          padding: `${24 - scrollProgress * 8}px 16px`,
+          borderRadius: `${20 - scrollProgress * 6}px`
         }}>
           <div className="greeting-icon" style={{
-            fontSize: isScrolled ? '24px' : '32px',
-            marginBottom: isScrolled ? '8px' : '16px'
+            fontSize: `${32 - scrollProgress * 8}px`,
+            marginBottom: `${16 - scrollProgress * 8}px`
           }}>🌈</div>
           <h1 className="greeting-text" style={{
-            fontSize: isScrolled ? '20px' : '26px',
-            marginBottom: isScrolled ? '0' : '8px'
+            fontSize: `${26 - scrollProgress * 6}px`,
+            marginBottom: `${8 - scrollProgress * 8}px`
           }}>
             안녕하세요, <span className="user-name">{user?.anonymousName}</span>님
           </h1>
-          {!isScrolled && <p className="greeting-subtitle">오늘 기분은 어떠신가요?</p>}
+          <p className="greeting-subtitle" style={{
+            opacity: 1 - scrollProgress * 2,
+            height: scrollProgress > 0.5 ? '0px' : 'auto',
+            overflow: 'hidden',
+            transition: 'none'
+          }}>오늘 기분은 어떠신가요?</p>
         </div>
       </header>
 
@@ -191,13 +196,6 @@ export default function Home() {
           box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
           border: 1px solid rgba(255, 255, 255, 0.2);
           margin: 0 auto;
-        }
-
-        .home-header.scrolled .greeting {
-          background: rgba(255, 255, 255, 0.95);
-          backdrop-filter: blur(20px);
-          box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-          border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .greeting-icon {
