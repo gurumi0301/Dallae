@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
+import { Home, MessageCircle, Heart, BookOpen, User, Menu, X } from 'lucide-react';
 import './DesktopSidebar.css';
 
 export default function DesktopSidebar() {
@@ -9,31 +10,31 @@ export default function DesktopSidebar() {
   const navigationItems = [
     {
       path: '/',
-      icon: '🏠',
+      icon: Home,
       label: '홈',
       description: '메인 화면'
     },
     {
       path: '/chat',
-      icon: '💬',
+      icon: MessageCircle,
       label: '채팅',
       description: '익명 대화'
     },
     {
       path: '/recommendations',
-      icon: '⭐',
+      icon: Heart,
       label: '추천',
       description: '맞춤 추천'
     },
     {
       path: '/diary',
-      icon: '📝',
+      icon: BookOpen,
       label: '다이어리',
       description: '감정 기록'
     },
     {
       path: '/profile',
-      icon: '👤',
+      icon: User,
       label: '프로필',
       description: '내 정보'
     }
@@ -65,7 +66,7 @@ export default function DesktopSidebar() {
           onClick={() => setIsCollapsed(!isCollapsed)}
           title={isCollapsed ? '사이드바 펼치기' : '사이드바 접기'}
         >
-          {isCollapsed ? '☰' : '✕'}
+          {isCollapsed ? <Menu size={16} /> : <X size={16} />}
         </button>
       </div>
 
@@ -76,7 +77,9 @@ export default function DesktopSidebar() {
             href={item.path} 
             className={`sidebar-nav-item ${location === item.path ? 'active' : ''}`}
           >
-            <div className="nav-item-icon">{item.icon}</div>
+            <div className="nav-item-icon">
+              {React.createElement(item.icon, { size: 18 })}
+            </div>
             <div className="nav-item-content">
               <span className="nav-item-title">{item.label}</span>
             </div>

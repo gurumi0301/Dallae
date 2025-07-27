@@ -89,8 +89,7 @@
 }
 
 .desktop-sidebar.collapsed .nav-item-content {
-  opacity: 0;
-  pointer-events: none;
+  display: none;
 }
 
 .nav-item-content {
@@ -110,10 +109,21 @@
 .desktop-sidebar.collapsed .sidebar-nav-item {
   justify-content: center;
   padding: 12px 8px;
+  margin: 4px 8px;
 }
 
 .desktop-sidebar.collapsed .nav-item-icon {
   margin: 0;
+}
+
+.desktop-sidebar.collapsed .sidebar-nav-item.active {
+  background: hsl(207, 89%, 54%);
+  color: white;
+  border-left: none;
+}
+
+.desktop-sidebar.collapsed .sidebar-nav-item:hover {
+  background: rgba(59, 130, 246, 0.2);
 }
 
 .desktop-sidebar.collapsed .sidebar-footer {
