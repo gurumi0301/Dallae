@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAnonymousUser } from '../hooks/useAnonymousUser';
 import { Link } from 'wouter';
 
 export default function Home() {
   const { user } = useAnonymousUser();
   const [selectedEmotion, setSelectedEmotion] = useState('');
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setScrolled(scrollTop > 100);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const emotions = [
     { name: '행복', emoji: '😊', color: 'peach' },
@@ -40,19 +51,19 @@ export default function Home() {
   ];
 
   return (
-    <div className="home-container">
+    <div className={`home-container ${scrolled ? 'scrolled' : ''}`}>
       {/* Background decorations */}
       <div className="bg-decoration bg-decoration-1"></div>
       <div className="bg-decoration bg-decoration-2"></div>
       <div className="bg-decoration bg-decoration-3"></div>
       
-      <header className="home-header">
+      <header className={`home-header ${scrolled ? 'scrolled' : ''}`}>
         <div className="greeting">
           <div className="greeting-icon">🌈</div>
           <h1 className="greeting-text">
             안녕하세요, <span className="user-name">{user?.anonymousName}</span>님
           </h1>
-          <p className="greeting-subtitle">오늘 기분은 어떠신가요?</p>
+          {!scrolled && <p className="greeting-subtitle">오늘 기분은 어떠신가요?</p>}
         </div>
       </header>
 
@@ -97,6 +108,11 @@ export default function Home() {
           min-height: 100vh;
           background: linear-gradient(135deg, #f0f9ff 0%, #f0fdf4 50%, #fefce8 100%);
           overflow: hidden;
+          transition: background 0.6s ease;
+        }
+
+        .home-container.scrolled {
+          background: white;
         }
 
         /* Background decorative elements */
@@ -105,6 +121,11 @@ export default function Home() {
           border-radius: 50%;
           opacity: 0.1;
           pointer-events: none;
+          transition: opacity 0.6s ease;
+        }
+
+        .home-container.scrolled .bg-decoration {
+          opacity: 0;
         }
 
         .bg-decoration-1 {
@@ -142,7 +163,24 @@ export default function Home() {
         .home-header {
           margin-bottom: 40px;
           position: relative;
-          z-index: 1;
+          z-index: 100;
+          transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .home-header.scrolled {
+          position: fixed;
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: calc(100% - 32px);
+          max-width: 396px;
+          margin-bottom: 0;
+          padding: 8px 0;
+          z-index: 1000;
+
+          background: linear-gradient(135deg, #f0f9ff 0%, #f0fdf4 50%, #fefce8 100%);
+          border-radius: 16px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
         }
 
         .greeting {
@@ -153,12 +191,26 @@ export default function Home() {
           border-radius: 20px;
           box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
           border: 1px solid rgba(255, 255, 255, 0.2);
+          transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .home-header.scrolled .greeting {
+          padding: 12px 16px;
+          border-radius: 12px;
+          box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
         }
 
         .greeting-icon {
           font-size: 32px;
           margin-bottom: 16px;
           animation: bounce 2s infinite;
+          transition: all 0.6s ease;
+        }
+
+        .home-header.scrolled .greeting-icon {
+          font-size: 20px;
+          margin-bottom: 8px;
+          animation: none;
         }
 
         @keyframes bounce {
@@ -173,6 +225,12 @@ export default function Home() {
           color: var(--gray-800);
           margin-bottom: 8px;
           line-height: 1.2;
+          transition: all 0.6s ease;
+        }
+
+        .home-header.scrolled .greeting-text {
+          font-size: 18px;
+          margin-bottom: 0;
         }
 
         .user-name {
@@ -187,6 +245,15 @@ export default function Home() {
           color: var(--gray-600);
           font-size: 16px;
           font-weight: 500;
+          transition: all 0.6s ease;
+          opacity: 1;
+        }
+
+        .home-header.scrolled .greeting-subtitle {
+          opacity: 0;
+          height: 0;
+          margin: 0;
+          overflow: hidden;
         }
 
         .section-title {
@@ -214,6 +281,12 @@ export default function Home() {
           margin-bottom: 40px;
           position: relative;
           z-index: 1;
+          margin-top: 0;
+          transition: margin-top 0.6s ease;
+        }
+
+        .home-container.scrolled .emotion-section {
+          margin-top: 80px;
         }
 
         .emotion-grid {
