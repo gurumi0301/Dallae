@@ -54,7 +54,10 @@ export default function Home() {
 
   return (
     <div className="home-container" style={{
-      background: 'white'
+      background: `linear-gradient(135deg, 
+        hsl(207, 89%, ${96 - scrollProgress * 8}%) 0%, 
+        hsl(125, 38%, ${97 - scrollProgress * 8}%) 50%, 
+        hsl(36, 100%, ${98 - scrollProgress * 8}%) 100%)`
     }}>
       {/* Background decorations */}
       <div className="bg-decoration bg-decoration-1" style={{opacity: 0.1 * (1 - scrollProgress)}}></div>
