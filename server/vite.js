@@ -16,7 +16,8 @@ export async function setupVite(app, server) {
     const vite = await createViteServer({
       server: { 
         middlewareMode: true,
-        hmr: { server }
+        hmr: { server },
+        host: true
       },
       appType: "spa",
       root: path.resolve("client"),
