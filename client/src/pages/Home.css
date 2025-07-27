@@ -41,11 +41,20 @@
     text-align: left;
   }
   
-  .home-greeting-datetime,
+  .home-greeting-info {
+    margin-top: 12px;
+  }
+  
+  .home-greeting-datetime {
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+  
   .home-greeting-weather {
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.9);
-    margin: 4px 0;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 400;
     line-height: 1.4;
   }
 

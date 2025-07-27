@@ -168,16 +168,23 @@ export default function Home() {
           <div className="home-greeting-message">
             <h1 className="home-greeting-text" style={{
               fontSize: `${26 - scrollProgress * 6}px`,
-              marginBottom: `${8 - scrollProgress * 8}px`
+              marginBottom: `${12 - scrollProgress * 4}px`
             }}>
               {fixedMessage.greeting}
             </h1>
-            <p className="home-greeting-datetime">
-              {fixedMessage.datetime}
-            </p>
-            <p className="home-greeting-weather">
-              {fixedMessage.weather}
-            </p>
+            <div className="home-greeting-info">
+              <p className="home-greeting-datetime" style={{
+                fontSize: `${16 - scrollProgress * 2}px`,
+                marginBottom: `${8 - scrollProgress * 2}px`
+              }}>
+                {fixedMessage.datetime}
+              </p>
+              <p className="home-greeting-weather" style={{
+                fontSize: `${14 - scrollProgress * 1}px`
+              }}>
+                {fixedMessage.weather}
+              </p>
+            </div>
           </div>
           <p className="home-greeting-subtitle" style={{
             opacity: 1 - scrollProgress * 2,
