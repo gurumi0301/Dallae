@@ -8,9 +8,10 @@ export default function Home() {
   const [selectedEmotion, setSelectedEmotion] = useState('');
   const [scrollY, setScrollY] = useState(0);
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
-  const [fadeClass, setFadeClass] = useState('fade-in');
+  const [fadeClass, setFadeClass] = useState('fade-out');
   const [currentTime, setCurrentTime] = useState(new Date());
   const [weather, setWeather] = useState(null);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   useEffect(() => {
     let ticking = false;
@@ -37,24 +38,31 @@ export default function Home() {
     return () => clearInterval(timer);
   }, []);
 
+  // 초기 로딩 페이드인 효과
+  useEffect(() => {
+    if (user?.anonymousName && isInitialLoad) {
+      // 첫 로딩시 1초 후 페이드인
+      setTimeout(() => {
+        setFadeClass('fade-in');
+        setIsInitialLoad(false);
+      }, 1000);
+    }
+  }, [user?.anonymousName, isInitialLoad]);
+
   // 메시지 순환 효과
   useEffect(() => {
-    const messages = [
-      { type: 'greeting', content: `안녕하세요, ${user?.anonymousName}님` },
-      { type: 'time', content: `현재 시간 ${currentTime.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })}` },
-      { type: 'weather', content: weather ? `${weather.description}, ${weather.temp}°C` : '날씨 정보를 가져오는 중...' }
-    ];
-
+    if (!user?.anonymousName || isInitialLoad) return;
+    
     const interval = setInterval(() => {
       setFadeClass('fade-out');
       setTimeout(() => {
-        setCurrentMessageIndex((prev) => (prev + 1) % messages.length);
+        setCurrentMessageIndex((prev) => (prev + 1) % 3);
         setFadeClass('fade-in');
       }, 500);
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [user?.anonymousName, currentTime, weather]);
+  }, [user?.anonymousName, isInitialLoad]);
 
   // 위치 기반 날씨 정보 가져오기
   useEffect(() => {
@@ -96,7 +104,14 @@ export default function Home() {
     { type: 'weather', content: weather ? `${weather.description}, ${weather.temp}°C` : '날씨 정보를 가져오는 중...' }
   ];
 
+  const backgroundImages = [
+    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&crop=center',
+    'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=600&fit=crop&crop=center',
+    'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop&crop=center'
+  ];
+
   const currentMessage = messages[currentMessageIndex];
+  const currentBgImage = backgroundImages[currentMessageIndex];
 
   const emotions = [
     { name: '행복', emoji: '😊', color: 'peach' },
@@ -151,9 +166,10 @@ export default function Home() {
         <div className="home-greeting" style={{
           padding: `${24 - scrollProgress * 8}px 16px`,
           borderRadius: `${20 - scrollProgress * 6}px`,
-          backgroundImage: 'linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7)), url("https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop&crop=center")',
+          backgroundImage: `linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7)), url("${currentBgImage}")`,
           backgroundSize: 'cover',
-          backgroundPosition: 'center'
+          backgroundPosition: 'center',
+          transition: 'background-image 0.5s ease-in-out'
         }}>
           <div className="home-greeting-icon" style={{
             fontSize: `${32 - scrollProgress * 8}px`,

@@ -320,7 +320,11 @@
 
 /* Fade animations */
 .home-greeting-message {
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .home-greeting-message.fade-in {
