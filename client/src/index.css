@@ -241,25 +241,30 @@ body {
 
 /* Desktop Layout */
 @media (min-width: 768px) {
-  body {
-    height: 100vh;
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
     overflow: hidden;
-    margin: 0;
-    padding: 0;
   }
   
   .desktop-layout {
     display: flex;
     height: 100vh;
     width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
   }
   
   .app-container {
     flex: 1;
-    max-width: none;
-    margin: 0;
-    padding: 0;
-    box-shadow: none;
+    max-width: none !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
     overflow-y: auto;
     height: 100vh;
     background: var(--background);
