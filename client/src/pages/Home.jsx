@@ -66,16 +66,16 @@ export default function Home() {
       
       <header className={`home-header ${isScrolled ? 'scrolled' : ''}`}>
         <div className="greeting" style={{
-          padding: `${24 - scrollProgress * 12}px 16px`,
-          borderRadius: `${20 - scrollProgress * 8}px`
+          padding: `${24 - scrollProgress * 8}px 16px`,
+          borderRadius: `${20 - scrollProgress * 6}px`
         }}>
           <div className="greeting-icon" style={{
-            fontSize: `${32 - scrollProgress * 12}px`,
-            marginBottom: `${16 - scrollProgress * 8}px`
+            fontSize: `${32 - scrollProgress * 8}px`,
+            marginBottom: `${16 - scrollProgress * 6}px`
           }}>🌈</div>
           <h1 className="greeting-text" style={{
-            fontSize: `${26 - scrollProgress * 8}px`,
-            marginBottom: `${8 - scrollProgress * 8}px`
+            fontSize: `${26 - scrollProgress * 6}px`,
+            marginBottom: `${8 - scrollProgress * 4}px`
           }}>
             안녕하세요, <span className="user-name">{user?.anonymousName}</span>님
           </h1>
@@ -182,17 +182,13 @@ export default function Home() {
         .home-header.scrolled {
           position: fixed;
           top: 8px;
-          left: 0;
-          right: 0;
-          width: 100%;
-          max-width: none;
+          left: 50%;
+          transform: translateX(-50%);
+          width: calc(100% - 32px);
+          max-width: 428px;
           margin-bottom: 0;
-          padding: 8px 16px;
+          padding: 8px 0;
           z-index: 1000;
-          background: rgba(255, 255, 255, 0.95);
-          backdrop-filter: blur(20px);
-          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-          box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
         }
 
         .greeting {
@@ -202,33 +198,22 @@ export default function Home() {
           box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
           border: 1px solid rgba(255, 255, 255, 0.2);
           transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-          max-width: 428px;
           margin: 0 auto;
         }
 
         .home-header.scrolled .greeting {
-          background: transparent;
-          backdrop-filter: none;
-          box-shadow: none;
-          border: none;
-          max-width: none;
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(20px);
+          box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+          border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .greeting-icon {
-          animation: bounce 2s infinite;
           transition: all 0.2s ease;
           display: inline-block;
         }
 
-        .home-header.scrolled .greeting-icon {
-          animation: none;
-        }
 
-        @keyframes bounce {
-          0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-          40% { transform: translateY(-10px); }
-          60% { transform: translateY(-5px); }
-        }
 
         .greeting-text {
           font-weight: 700;
