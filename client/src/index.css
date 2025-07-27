@@ -231,6 +231,16 @@ body {
   overflow: hidden;
 }
 
+/* 데스크톱에서 전체 화면 활용 */
+@media (min-width: 768px) {
+  .app-container {
+    max-width: none;
+    width: 100vw;
+    margin: 0;
+    box-shadow: none;
+  }
+}
+
 /* Loading screen */
 .loading-screen {
   display: flex;
