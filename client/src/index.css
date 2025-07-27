@@ -239,10 +239,12 @@ body {
   overflow: hidden;
 }
 
-/* Desktop Layout - 기본 설정만 유지 */
+/* 데스크톱에서 전체 화면 활용 */
 @media (min-width: 768px) {
   .app-container {
     max-width: none;
+    width: 100vw;
+    margin: 0;
     box-shadow: none;
   }
 }

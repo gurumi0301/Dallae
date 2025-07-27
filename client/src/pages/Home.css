@@ -10,15 +10,17 @@
 /* Desktop responsive design */
 @media (min-width: 768px) {
   .home-container {
-    padding: 40px 60px;
+    padding: 40px 50px;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 50px;
     align-items: start;
     min-height: 100vh;
     width: 100%;
     box-sizing: border-box;
-    max-width: none;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow-y: auto;
   }
 
   .home-header {

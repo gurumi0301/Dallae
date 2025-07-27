@@ -12,7 +12,6 @@ import OnboardingScreen from "./components/OnboardingScreen";
 import BottomNavigation from "./components/BottomNavigation";
 import DesktopSidebar from "./components/DesktopSidebar";
 import { useAnonymousUser } from "./hooks/useAnonymousUser";
-import "./index-desktop.css";
 
 function Router() {
   const [showOnboarding, setShowOnboarding] = useState(true);
@@ -46,34 +45,9 @@ function Router() {
     return <OnboardingScreen onComplete={handleOnboardingComplete} />;
   }
 
-  const isDesktop = window.innerWidth >= 768;
-
-  if (isDesktop) {
-    return (
-      <div className="desktop-layout">
-        <DesktopSidebar />
-        <div className="app-container">
-          <Switch>
-            <Route path="/" component={Home} />
-            <Route path="/chat" component={Chat} />
-            <Route path="/chat/:sessionId" component={Chat} />
-            <Route path="/recommendations" component={Recommendations} />
-            <Route path="/diary" component={Diary} />
-            <Route path="/profile" component={Profile} />
-            <Route>
-              <div className="error-page">
-                <h2 className="error-title">페이지를 찾을 수 없습니다</h2>
-                <p className="error-text">잘못된 주소입니다.</p>
-              </div>
-            </Route>
-          </Switch>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="app-container">
+      <DesktopSidebar />
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/chat" component={Chat} />

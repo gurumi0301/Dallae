@@ -1,6 +1,9 @@
 .desktop-sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
   width: 200px;
-  transition: width 0.2s ease;
+  transition: width 0.3s ease;
   height: 100vh;
   background: linear-gradient(180deg, 
     hsl(207, 89%, 96%) 0%, 
@@ -9,14 +12,14 @@
   border-right: 1px solid hsl(210, 40%, 90%);
   display: flex;
   flex-direction: column;
-  flex-shrink: 0;
+  z-index: 1000;
   box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
 }
 
 /* 모바일에서는 숨김 */
 @media (max-width: 767px) {
   .desktop-sidebar {
-    display: none !important;
+    display: none;
   }
 }
 
@@ -33,26 +36,16 @@
   right: 16px;
   background: none;
   border: none;
-  font-size: 16px;
+  font-size: 18px;
   cursor: pointer;
   color: hsl(220, 14%, 50%);
-  padding: 6px;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
 }
 
 .sidebar-toggle:hover {
   background-color: rgba(0, 0, 0, 0.1);
-  transform: scale(1.1);
-}
-
-.desktop-sidebar.collapsed .sidebar-toggle {
-  right: 16px;
 }
 
 .sidebar-logo {
@@ -92,29 +85,19 @@
 .desktop-sidebar.collapsed .logo-text,
 .desktop-sidebar.collapsed .sidebar-subtitle {
   opacity: 0;
-  pointer-events: none;
 }
 
 .desktop-sidebar.collapsed .nav-item-text {
   opacity: 0;
-  width: 0;
-  overflow: hidden;
-  pointer-events: none;
 }
 
 .nav-item-text {
-  transition: opacity 0.2s ease, width 0.2s ease;
-  white-space: nowrap;
+  transition: opacity 0.3s ease;
 }
 
-.desktop-sidebar.collapsed .sidebar-nav-item {
+.desktop-sidebar.collapsed .nav-item {
   justify-content: center;
   padding: 16px 8px;
-  margin: 6px 8px;
-}
-
-.sidebar-nav-item {
-  transition: all 0.2s ease;
 }
 
 .sidebar-nav {
