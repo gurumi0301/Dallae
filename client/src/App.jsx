@@ -10,6 +10,7 @@ import Recommendations from "./pages/Recommendations";
 import Profile from "./pages/Profile";
 import OnboardingScreen from "./components/OnboardingScreen";
 import BottomNavigation from "./components/BottomNavigation";
+import DesktopSidebar from "./components/DesktopSidebar";
 import { useAnonymousUser } from "./hooks/useAnonymousUser";
 
 function Router() {
@@ -46,6 +47,7 @@ function Router() {
 
   return (
     <div className="app-container">
+      <DesktopSidebar />
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/chat" component={Chat} />
