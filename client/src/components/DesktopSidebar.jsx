@@ -37,12 +37,6 @@ export default function DesktopSidebar() {
       icon: User,
       label: '프로필',
       description: '내 정보'
-    },
-    {
-      path: '/settings/ai',
-      icon: Settings,
-      label: '설정',
-      description: '앱 설정'
     }
   ];
 
@@ -81,8 +75,7 @@ export default function DesktopSidebar() {
           const isActive = location === item.path || 
             (item.path === '/chat' && location.startsWith('/chat/')) ||
             (item.path === '/recommendations/music' && location.startsWith('/recommendations')) ||
-            (item.path === '/profile' && location.startsWith('/profile')) ||
-            (item.path === '/settings/ai' && location.startsWith('/settings'));
+            (item.path === '/profile' && location.startsWith('/profile'));
             
           return (
           <Link 
@@ -102,6 +95,17 @@ export default function DesktopSidebar() {
       </div>
 
       <div className="sidebar-footer">
+        <Link 
+          href="/settings/ai" 
+          className={`sidebar-nav-item ${location.startsWith('/settings') ? 'active' : ''}`}
+        >
+          <div className="nav-item-icon">
+            <Settings size={18} />
+          </div>
+          <div className="nav-item-content">
+            <span className="nav-item-title">설정</span>
+          </div>
+        </Link>
         <div className="sidebar-status">
           <div className="status-indicator"></div>
           <span className="status-text">온라인</span>
