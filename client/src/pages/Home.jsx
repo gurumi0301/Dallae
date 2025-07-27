@@ -8,16 +8,24 @@ export default function Home() {
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      setScrollY(window.scrollY);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setScrollY(window.scrollY);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollProgress = Math.min(scrollY / 200, 1); // 200px까지 완전 변환
-  const isScrolled = scrollY > 50;
+  const scrollProgress = Math.min(scrollY / 150, 1); // 150px까지 완전 변환
+  const isScrolled = scrollY > 30;
 
   const emotions = [
     { name: '행복', emoji: '😊', color: 'peach' },
@@ -131,6 +139,8 @@ export default function Home() {
           min-height: 100vh;
           overflow: hidden;
           transition: background 0.1s ease;
+          scroll-behavior: smooth;
+          -webkit-overflow-scrolling: touch;
         }
 
         /* Background decorative elements */
