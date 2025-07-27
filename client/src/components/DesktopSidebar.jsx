@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
-import { Home, MessageCircle, Heart, BookOpen, User, Menu, X } from 'lucide-react';
+import { Home, MessageCircle, Heart, BookOpen, User, Settings, Menu, X } from 'lucide-react';
 import './DesktopSidebar.css';
 
 export default function DesktopSidebar() {
@@ -37,6 +37,12 @@ export default function DesktopSidebar() {
       icon: User,
       label: '프로필',
       description: '내 정보'
+    },
+    {
+      path: '/settings/ai',
+      icon: Settings,
+      label: '설정',
+      description: '앱 설정'
     }
   ];
 
@@ -75,7 +81,8 @@ export default function DesktopSidebar() {
           const isActive = location === item.path || 
             (item.path === '/chat' && location.startsWith('/chat/')) ||
             (item.path === '/recommendations/music' && location.startsWith('/recommendations')) ||
-            (item.path === '/profile' && location.startsWith('/profile'));
+            (item.path === '/profile' && location.startsWith('/profile')) ||
+            (item.path === '/settings/ai' && location.startsWith('/settings'));
             
           return (
           <Link 

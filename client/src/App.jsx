@@ -10,6 +10,8 @@ import Diary from "./pages/Diary";
 import Recommendations from "./pages/Recommendations";
 import RecommendationTab from "./pages/RecommendationTab";
 import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
+import SettingsTab from "./pages/SettingsTab";
 import OnboardingScreen from "./components/OnboardingScreen";
 import BottomNavigation from "./components/BottomNavigation";
 import DesktopSidebar from "./components/DesktopSidebar";
@@ -58,6 +60,8 @@ function Router() {
         <Route path="/recommendations" component={Recommendations} />
         <Route path="/diary" component={Diary} />
         <Route path="/profile" component={Profile} />
+        <Route path="/settings/:type" component={SettingsTab} />
+        <Route path="/settings" component={Settings} />
         <Route>
           <div className="error-page">
             <h2 className="error-title">페이지를 찾을 수 없습니다</h2>
