@@ -12,6 +12,7 @@ import OnboardingScreen from "./components/OnboardingScreen";
 import BottomNavigation from "./components/BottomNavigation";
 import DesktopSidebar from "./components/DesktopSidebar";
 import { useAnonymousUser } from "./hooks/useAnonymousUser";
+import "./index-desktop.css";
 
 function Router() {
   const [showOnboarding, setShowOnboarding] = useState(true);

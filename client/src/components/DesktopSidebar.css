@@ -16,7 +16,7 @@
 /* 모바일에서는 숨김 */
 @media (max-width: 767px) {
   .desktop-sidebar {
-    display: none;
+    display: none !important;
   }
 }
 
