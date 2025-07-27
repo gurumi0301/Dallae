@@ -137,10 +137,8 @@ export default function Home() {
           padding-bottom: 100px;
           position: relative;
           min-height: 100vh;
-          overflow: hidden;
+          overflow-x: hidden;
           transition: background 0.1s ease;
-          scroll-behavior: smooth;
-          -webkit-overflow-scrolling: touch;
         }
 
         /* Background decorative elements */
