@@ -1,0 +1,35 @@
+import { createServer as createViteServer } from "vite";
+import express from "express";
+import path from "path";
+
+export function log(message) {
+  const timestamp = new Date().toLocaleTimeString();
+  console.log(`${timestamp} [express] ${message}`);
+}
+
+export async function setupVite(app, server) {
+  if (process.env.NODE_ENV === "production") {
+    console.log("Production mode: serving static files");
+    serveStatic(app);
+  } else {
+    console.log("Development mode: setting up Vite middleware");
+    const vite = await createViteServer({
+      server: { 
+        middlewareMode: true,
+        hmr: { server }
+      },
+      appType: "spa",
+      root: path.resolve("client"),
+    });
+
+    app.use(vite.middlewares);
+  }
+}
+
+export function serveStatic(app) {
+  app.use("/", express.static(path.resolve("dist/public")));
+  
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve("dist/public/index.html"));
+  });
+}

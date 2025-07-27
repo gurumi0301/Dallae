@@ -31,10 +31,10 @@ export default function Home() {
       color: 'soft-blue'
     },
     {
-      title: '나의 통계',
-      description: '감정 패턴을 확인해보세요',
-      icon: '📊',
-      path: '/stats',
+      title: '맞춤 추천',
+      description: '오늘을 위한 추천을 확인해보세요',
+      icon: '⭐',
+      path: '/recommendations',
       color: 'peach'
     }
   ];

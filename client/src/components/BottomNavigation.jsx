@@ -18,16 +18,22 @@ export default function BottomNavigation() {
       activeIcon: '💬'
     },
     {
+      name: '추천',
+      path: '/recommendations',
+      icon: '⭐',
+      activeIcon: '⭐'
+    },
+    {
       name: '일기',
       path: '/diary',
       icon: '📝',
       activeIcon: '📝'
     },
     {
-      name: '통계',
-      path: '/stats',
-      icon: '📊',
-      activeIcon: '📊'
+      name: '프로필',
+      path: '/profile',
+      icon: '👤',
+      activeIcon: '👤'
     }
   ];
 
@@ -35,7 +41,9 @@ export default function BottomNavigation() {
     <nav className="bottom-nav">
       {navItems.map((item) => {
         const isActive = location === item.path || 
-          (item.path === '/chat' && location.startsWith('/chat/'));
+          (item.path === '/chat' && location.startsWith('/chat/')) ||
+          (item.path === '/recommendations' && location.startsWith('/recommendations')) ||
+          (item.path === '/profile' && location.startsWith('/profile'));
         
         return (
           <Link key={item.path} href={item.path} className="nav-item">

@@ -109,6 +109,9 @@ This is a mental health support mobile application called "마음담기" (Maeum-
 Changelog:
 - June 30, 2025. Initial setup
 - July 27, 2025. Successfully converted from TypeScript to JavaScript and from Tailwind CSS to regular CSS while maintaining React functionality
+- July 27, 2025. Implemented complete 5-page navigation system: 홈(Home), 채팅(Chat), 추천(Recommendations), 다이어리(Diary), 프로필(Profile)
+- July 27, 2025. Created Profile page with account info section and dual-tab structure for personal/app statistics
+- July 27, 2025. Fixed server configuration to use JavaScript (server/index.js) instead of TypeScript
 ```
 
 # User Preferences

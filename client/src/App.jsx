@@ -5,7 +5,8 @@ import { useState, useEffect } from "react";
 import Home from "./pages/Home";
 import Chat from "./pages/Chat";
 import Diary from "./pages/Diary";
-import Stats from "./pages/Stats";
+import Recommendations from "./pages/Recommendations";
+import Profile from "./pages/Profile";
 import OnboardingScreen from "./components/OnboardingScreen";
 import BottomNavigation from "./components/BottomNavigation";
 import { useAnonymousUser } from "./hooks/useAnonymousUser";
@@ -48,8 +49,9 @@ function Router() {
         <Route path="/" component={Home} />
         <Route path="/chat" component={Chat} />
         <Route path="/chat/:sessionId" component={Chat} />
+        <Route path="/recommendations" component={Recommendations} />
         <Route path="/diary" component={Diary} />
-        <Route path="/stats" component={Stats} />
+        <Route path="/profile" component={Profile} />
         <Route>
           <div className="error-page">
             <h2 className="error-title">페이지를 찾을 수 없습니다</h2>
