@@ -52,10 +52,10 @@ function Router() {
       <DesktopSidebar />
       <Switch>
         <Route path="/" component={Home} />
-        <Route path="/chat" component={Chat} />
         <Route path="/chat/:type/:id" component={ChatRoom} />
-        <Route path="/recommendations" component={Recommendations} />
+        <Route path="/chat" component={Chat} />
         <Route path="/recommendations/:type" component={RecommendationTab} />
+        <Route path="/recommendations" component={Recommendations} />
         <Route path="/diary" component={Diary} />
         <Route path="/profile" component={Profile} />
         <Route>
