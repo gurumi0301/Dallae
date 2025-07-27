@@ -3,6 +3,7 @@ import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
+import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import Chat from "./pages/Chat";
 import ChatRoom from "./pages/ChatRoom";
@@ -77,7 +78,9 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Router />
+      <ThemeProvider>
+        <Router />
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

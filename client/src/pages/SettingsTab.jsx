@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAnonymousUser } from '../hooks/useAnonymousUser';
 import { useRoute, Link } from 'wouter';
+import { useTheme } from '../contexts/ThemeContext';
 import '../styles/Settings.css';
 
 export default function SettingsTab() {
@@ -9,6 +10,7 @@ export default function SettingsTab() {
   const activeTab = params?.type || 'ai';
   const [isLoading, setIsLoading] = useState(true);
   const [hasLoaded, setHasLoaded] = useState(false);
+  const { theme, setLightTheme, setDarkTheme, setSystemTheme } = useTheme();
 
   // 첫 진입 시에만 로딩 표시
   useEffect(() => {
@@ -96,15 +98,24 @@ export default function SettingsTab() {
             <div className="settings-section">
               <h3 className="section-title">화면 테마</h3>
               <div className="theme-options">
-                <div className="theme-option active">
+                <div 
+                  className={`theme-option ${theme === 'light' ? 'active' : ''}`}
+                  onClick={setLightTheme}
+                >
                   <div className="theme-preview light"></div>
                   <span className="theme-name">라이트 모드</span>
                 </div>
-                <div className="theme-option">
+                <div 
+                  className={`theme-option ${theme === 'dark' ? 'active' : ''}`}
+                  onClick={setDarkTheme}
+                >
                   <div className="theme-preview dark"></div>
                   <span className="theme-name">다크 모드</span>
                 </div>
-                <div className="theme-option">
+                <div 
+                  className={`theme-option ${theme === 'system' ? 'active' : ''}`}
+                  onClick={setSystemTheme}
+                >
                   <div className="theme-preview auto"></div>
                   <span className="theme-name">시스템 설정</span>
                 </div>

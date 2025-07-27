@@ -119,6 +119,8 @@ Changelog:
 - July 27, 2025. Added tab-based recommendations system with music, book, movie, activity, and meditation categories
 - July 27, 2025. Implemented URL-based routing for recommendation tabs (/recommendations/music etc.) with browser-tab style design
 - July 27, 2025. Fixed routing order and added Link components for proper tab navigation within recommendations
+- July 27, 2025. Created comprehensive Settings page with 5 tabs (AI, Theme, Home, Privacy, Notifications) using browser-tab design and URL routing (/settings/ai, etc.)
+- July 27, 2025. Implemented dark mode with CSS variables, theme context, and theme switcher in settings page
 ```
 
 # User Preferences
