@@ -136,6 +136,17 @@ export default function ChatRoom() {
     });
   };
 
+  const shouldShowTime = (currentMessage, previousMessage) => {
+    if (!previousMessage) return true;
+    
+    const currentTime = new Date(currentMessage.timestamp);
+    const previousTime = new Date(previousMessage.timestamp);
+    
+    // 분이 다르면 시간 표시
+    return currentTime.getMinutes() !== previousTime.getMinutes() ||
+           currentTime.getHours() !== previousTime.getHours();
+  };
+
   const handleLeaveChat = () => {
     setLocation('/chat');
   };
@@ -166,17 +177,26 @@ export default function ChatRoom() {
 
       <div className="chat-interface">
         <div className="chat-messages">
-          {messages.map((message) => (
-            <div key={message.id} className={`message ${message.isOwn ? 'own' : ''}`}>
-              <div className="message-avatar">
-                {message.isOwn ? user.anonymousName[0] : (chatInfo.type === 'ai' ? '🤖' : '친')}
+          {messages.map((message, index) => {
+            const showTime = shouldShowTime(message, messages[index - 1]);
+            return (
+              <div key={message.id}>
+                <div className={`message ${message.isOwn ? 'own' : ''}`}>
+                  <div className="message-avatar">
+                    {message.isOwn ? user.anonymousName[0] : (chatInfo.type === 'ai' ? '🤖' : '친')}
+                  </div>
+                  <div className="message-content">
+                    <p className="message-text">{message.text}</p>
+                  </div>
+                </div>
+                {showTime && (
+                  <div className={`message-timestamp ${message.isOwn ? 'own' : ''}`}>
+                    {formatTime(message.timestamp)}
+                  </div>
+                )}
               </div>
-              <div className="message-content">
-                <p className="message-text">{message.text}</p>
-                <div className="message-time">{formatTime(message.timestamp)}</div>
-              </div>
-            </div>
-          ))}
+            );
+          })}
           
           {isTyping && (
             <div className="message">

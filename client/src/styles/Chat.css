@@ -280,14 +280,16 @@
   margin: 0;
 }
 
-.message-time {
+.message-timestamp {
   font-size: 12px;
   color: var(--gray-500);
-  margin-top: 4px;
+  text-align: center;
+  margin: 8px 0 16px 0;
 }
 
-.message.own .message-time {
-  color: rgba(255, 255, 255, 0.8);
+.message-timestamp.own {
+  text-align: right;
+  margin-right: 48px;
 }
 
 .chat-input-area {
