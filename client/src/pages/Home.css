@@ -10,38 +10,42 @@
 /* Desktop responsive design */
 @media (min-width: 768px) {
   .home-container {
-    padding: 40px 60px;
+    padding: 60px 80px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 60px;
+    gap: 80px;
     align-items: start;
     min-height: 100vh;
+    max-width: none;
+    width: 100%;
   }
 
   .home-header {
     grid-column: 1 / -1;
-    margin-bottom: 60px;
+    margin-bottom: 80px;
   }
 
   .home-greeting {
-    max-width: 800px;
+    max-width: none;
+    width: 100%;
     margin: 0 auto;
-    padding: 40px !important;
-    border-radius: 24px !important;
+    padding: 60px 40px !important;
+    border-radius: 32px !important;
   }
 
   .home-greeting-icon {
-    font-size: 48px !important;
-    margin-bottom: 24px !important;
+    font-size: 64px !important;
+    margin-bottom: 32px !important;
   }
 
   .home-greeting-text {
-    font-size: 32px !important;
-    margin-bottom: 16px !important;
+    font-size: 42px !important;
+    margin-bottom: 20px !important;
   }
 
   .home-greeting-subtitle {
-    font-size: 18px;
+    font-size: 24px;
+    margin-top: 16px;
   }
 
   .home-emotion-section {
@@ -53,47 +57,53 @@
   }
 
   .home-section-title {
-    font-size: 28px;
+    font-size: 36px;
     text-align: left;
+    margin-bottom: 40px;
   }
 
   .home-emotion-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-
-  .home-emotion-btn {
-    padding: 24px 16px;
-  }
-
-  .home-emotion-emoji {
-    font-size: 32px;
-  }
-
-  .home-emotion-name {
-    font-size: 16px;
-  }
-
-  .home-action-grid {
+    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
   }
 
+  .home-emotion-btn {
+    padding: 32px 20px;
+    border-radius: 24px;
+  }
+
+  .home-emotion-emoji {
+    font-size: 42px;
+    margin-bottom: 12px;
+  }
+
+  .home-emotion-name {
+    font-size: 18px;
+  }
+
+  .home-action-grid {
+    gap: 32px;
+  }
+
   .home-action-card {
-    padding: 32px;
+    padding: 40px;
+    border-radius: 24px;
   }
 
   .home-action-icon {
-    font-size: 36px;
-    min-width: 80px;
-    height: 80px;
+    font-size: 48px;
+    min-width: 100px;
+    height: 100px;
+    margin-right: 32px;
   }
 
   .home-action-title {
-    font-size: 20px;
+    font-size: 24px;
+    margin-bottom: 8px;
   }
 
   .home-action-description {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   /* Desktop scroll adjustments */
