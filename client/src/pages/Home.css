@@ -10,42 +10,42 @@
 /* Desktop responsive design */
 @media (min-width: 768px) {
   .home-container {
-    padding: 3vh 5vw;
+    padding: 40px;
     display: grid;
-    grid-template-columns: 65% 35%;
-    gap: 4vw;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
     align-items: start;
     min-height: 100vh;
-    width: 100vw;
+    width: 100%;
     box-sizing: border-box;
   }
 
   .home-header {
     grid-column: 1 / -1;
-    margin-bottom: 3vh;
+    margin-bottom: 30px;
   }
 
   .home-greeting {
-    max-width: 60vw;
+    max-width: 100%;
     width: 100%;
     margin: 0 auto;
-    padding: 3vh 2vw !important;
-    border-radius: 1.5rem !important;
+    padding: 32px 24px !important;
+    border-radius: 20px !important;
   }
 
   .home-greeting-icon {
-    font-size: 2.5rem !important;
-    margin-bottom: 1rem !important;
+    font-size: 36px !important;
+    margin-bottom: 16px !important;
   }
 
   .home-greeting-text {
-    font-size: 2rem !important;
-    margin-bottom: 1rem !important;
+    font-size: 28px !important;
+    margin-bottom: 12px !important;
   }
 
   .home-greeting-subtitle {
-    font-size: 1.2rem;
-    margin-top: 0.8rem;
+    font-size: 16px;
+    margin-top: 8px;
   }
 
   .home-emotion-section {
@@ -57,55 +57,55 @@
   }
 
   .home-section-title {
-    font-size: 1.8rem;
+    font-size: 24px;
     text-align: left;
-    margin-bottom: 2rem;
+    margin-bottom: 24px;
   }
 
   .home-emotion-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5vw;
+    gap: 16px;
   }
 
   .home-emotion-btn {
-    padding: 2vh 1.5vw;
-    border-radius: 1.2rem;
-    min-height: 12vh;
+    padding: 24px 16px;
+    border-radius: 16px;
+    min-height: 120px;
   }
 
   .home-emotion-emoji {
-    font-size: 2.5rem;
-    margin-bottom: 0.8rem;
+    font-size: 32px;
+    margin-bottom: 8px;
   }
 
   .home-emotion-name {
-    font-size: 1rem;
+    font-size: 14px;
   }
 
   .home-action-grid {
-    gap: 1.5vh;
+    gap: 16px;
   }
 
   .home-action-card {
-    padding: 2vh 1.5vw;
-    border-radius: 1.2rem;
-    min-height: 12vh;
+    padding: 24px;
+    border-radius: 16px;
+    min-height: 100px;
   }
 
   .home-action-icon {
-    font-size: 2.5rem;
-    min-width: 4.5rem;
-    height: 4.5rem;
-    margin-right: 1.2rem;
+    font-size: 32px;
+    min-width: 60px;
+    height: 60px;
+    margin-right: 16px;
   }
 
   .home-action-title {
-    font-size: 1.3rem;
-    margin-bottom: 0.4rem;
+    font-size: 18px;
+    margin-bottom: 4px;
   }
 
   .home-action-description {
-    font-size: 1rem;
+    font-size: 14px;
   }
 
   /* Desktop scroll adjustments */
