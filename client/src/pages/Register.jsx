@@ -319,7 +319,7 @@ export default function Register() {
         <div className="auth-links">
           <p className="auth-link-text">
             이미 계정이 있으신가요? 
-            <Link href="/login" className="auth-link">로그인</Link>
+            <Link href="/auth/login" className="auth-link">로그인</Link>
           </p>
         </div>
       </div>

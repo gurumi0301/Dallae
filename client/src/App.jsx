@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
@@ -22,6 +22,7 @@ import DesktopSidebar from "./components/DesktopSidebar";
 import { useAnonymousUser } from "./hooks/useAnonymousUser";
 
 function Router() {
+  const [location] = useLocation();
   const [showOnboarding, setShowOnboarding] = useState(true);
   const { user, isLoading } = useAnonymousUser();
 
@@ -53,12 +54,14 @@ function Router() {
     return <OnboardingScreen onComplete={handleOnboardingComplete} />;
   }
 
+  const isAuthPage = location.startsWith('/auth/');
+
   return (
     <div className="app-container">
-      <DesktopSidebar />
+      {!isAuthPage && <DesktopSidebar />}
       <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
+        <Route path="/auth/login" component={Login} />
+        <Route path="/auth/register" component={Register} />
         <Route path="/auth/psychology-test" component={PsychologyTest} />
         <Route path="/" component={Home} />
         <Route path="/chat/:type/:id" component={ChatRoom} />
@@ -76,7 +79,7 @@ function Router() {
           </div>
         </Route>
       </Switch>
-      <BottomNavigation />
+      {!isAuthPage && <BottomNavigation />}
     </div>
   );
 }

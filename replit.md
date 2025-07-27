@@ -125,6 +125,7 @@ Changelog:
 - July 27, 2025. Fixed file extension inconsistencies by converting all server files to JavaScript (.js) and ensuring consistent imports across the codebase
 - July 27, 2025. All text alignment changed to left-aligned throughout the application for better readability
 - July 27, 2025. Created PostgreSQL database tables: registered_users, anonymous_users, emotions, psychology_tests, psychology_test_results, and chat_messages
+- July 27, 2025. Updated authentication URLs to auth/login and auth/register, implemented sidebar hiding for authentication pages
 ```
 
 # User Preferences

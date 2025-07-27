@@ -122,7 +122,7 @@ export default function Login() {
         <div className="auth-links">
           <p className="auth-link-text">
             계정이 없으신가요? 
-            <Link href="/register" className="auth-link">회원가입</Link>
+            <Link href="/auth/register" className="auth-link">회원가입</Link>
           </p>
           <p className="auth-link-text">
             익명으로 이용하고 싶으신가요? 
