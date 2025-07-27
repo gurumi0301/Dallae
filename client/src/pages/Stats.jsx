@@ -133,7 +133,7 @@ export default function Stats() {
 
       <div className="bottom-spacer"></div>
 
-      <style jsx>{`
+      <style>{`
         .stats-container {
           padding: 24px 16px;
           padding-bottom: 100px;

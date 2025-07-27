@@ -67,7 +67,7 @@ export default function Chat() {
 
         <div className="bottom-spacer"></div>
 
-        <style jsx>{`
+        <style>{`
           .chat-container {
             padding: 24px 16px;
             padding-bottom: 100px;
@@ -180,7 +180,7 @@ export default function Chat() {
         <button className="btn btn-primary">전송</button>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .chat-room {
           height: 100vh;
           display: flex;

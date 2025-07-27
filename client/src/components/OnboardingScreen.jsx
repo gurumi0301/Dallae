@@ -66,7 +66,7 @@ export default function OnboardingScreen({ onComplete }) {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .onboarding-container {
           height: 100vh;
           background: linear-gradient(135deg, var(--soft-blue), var(--mint));

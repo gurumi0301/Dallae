@@ -81,7 +81,7 @@ export default function Home() {
 
       <div className="bottom-spacer"></div>
 
-      <style jsx>{`
+      <style>{`
         .home-container {
           padding: 24px 16px;
           padding-bottom: 100px;

@@ -5,17 +5,17 @@ This is a mental health support mobile application called "마음담기" (Maeum-
 # System Architecture
 
 ## Frontend Architecture
-- **Framework**: React 18 with TypeScript
-- **Styling**: Tailwind CSS with shadcn/ui components
+- **Framework**: React 18 with JavaScript (.jsx)
+- **Styling**: Custom CSS with CSS variables (converted from Tailwind)
 - **Routing**: Wouter for client-side routing
 - **State Management**: TanStack Query for server state
-- **UI Components**: Radix UI primitives with custom theming
+- **UI Components**: Custom styled components with semantic classes
 - **Build Tool**: Vite with custom mobile-first configuration
 
 ## Backend Architecture
 - **Runtime**: Node.js with Express.js
-- **Language**: TypeScript with ESM modules
-- **Real-time Communication**: WebSocket server for live chat features
+- **Language**: JavaScript with ES modules (.js)
+- **Real-time Communication**: WebSocket server for live chat features (temporarily disabled)
 - **Session Management**: Anonymous session-based authentication
 - **AI Integration**: OpenAI GPT-4o for emotion analysis and comfort generation
 
@@ -108,6 +108,7 @@ This is a mental health support mobile application called "마음담기" (Maeum-
 ```
 Changelog:
 - June 30, 2025. Initial setup
+- July 27, 2025. Successfully converted from TypeScript to JavaScript and from Tailwind CSS to regular CSS while maintaining React functionality
 ```
 
 # User Preferences

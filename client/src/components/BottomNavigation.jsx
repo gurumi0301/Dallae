@@ -49,7 +49,7 @@ export default function BottomNavigation() {
         );
       })}
 
-      <style jsx>{`
+      <style>{`
         .bottom-nav {
           position: fixed;
           bottom: 0;

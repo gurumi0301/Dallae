@@ -161,7 +161,7 @@ export default function Diary() {
 
       <div className="bottom-spacer"></div>
 
-      <style jsx>{`
+      <style>{`
         .diary-container {
           padding: 24px 16px;
           padding-bottom: 100px;
