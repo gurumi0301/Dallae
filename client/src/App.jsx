@@ -13,6 +13,9 @@ import RecommendationTab from "./pages/RecommendationTab";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import SettingsTab from "./pages/SettingsTab";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import PsychologyTest from "./pages/PsychologyTest";
 import OnboardingScreen from "./components/OnboardingScreen";
 import BottomNavigation from "./components/BottomNavigation";
 import DesktopSidebar from "./components/DesktopSidebar";
@@ -54,6 +57,9 @@ function Router() {
     <div className="app-container">
       <DesktopSidebar />
       <Switch>
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+        <Route path="/auth/psychology-test" component={PsychologyTest} />
         <Route path="/" component={Home} />
         <Route path="/chat/:type/:id" component={ChatRoom} />
         <Route path="/chat" component={Chat} />
