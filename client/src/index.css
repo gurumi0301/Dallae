@@ -127,10 +127,14 @@ body {
   overflow-x: hidden;
 }
 
-/* Desktop background for mobile-like container */
+/* Desktop background for full-screen design */
 @media (min-width: 768px) {
   body {
     background: linear-gradient(135deg, #f0f9ff 0%, #f0fdf4 50%, #fefce8 100%);
+  }
+  
+  #root {
+    min-height: 100vh;
   }
 }
 

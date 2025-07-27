@@ -10,11 +10,103 @@
 /* Desktop responsive design */
 @media (min-width: 768px) {
   .home-container {
-    max-width: 428px;
+    padding: 40px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    max-width: 1200px;
     margin: 0 auto;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
-    border-left: 1px solid rgba(0, 0, 0, 0.1);
-    border-right: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .home-header {
+    grid-column: 1 / -1;
+    margin-bottom: 60px;
+  }
+
+  .home-greeting {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px !important;
+    border-radius: 24px !important;
+  }
+
+  .home-greeting-icon {
+    font-size: 48px !important;
+    margin-bottom: 24px !important;
+  }
+
+  .home-greeting-text {
+    font-size: 32px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .home-greeting-subtitle {
+    font-size: 18px;
+  }
+
+  .home-emotion-section {
+    grid-column: 1;
+  }
+
+  .home-actions-section {
+    grid-column: 2;
+  }
+
+  .home-section-title {
+    font-size: 28px;
+    text-align: left;
+  }
+
+  .home-emotion-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .home-emotion-btn {
+    padding: 24px 16px;
+  }
+
+  .home-emotion-emoji {
+    font-size: 32px;
+  }
+
+  .home-emotion-name {
+    font-size: 16px;
+  }
+
+  .home-action-grid {
+    gap: 24px;
+  }
+
+  .home-action-card {
+    padding: 32px;
+  }
+
+  .home-action-icon {
+    font-size: 36px;
+    min-width: 80px;
+    height: 80px;
+  }
+
+  .home-action-title {
+    font-size: 20px;
+  }
+
+  .home-action-description {
+    font-size: 16px;
+  }
+
+  /* Desktop scroll adjustments */
+  .home-header.scrolled {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+  }
+
+  .home-header-spacer {
+    display: none;
   }
 }
 
