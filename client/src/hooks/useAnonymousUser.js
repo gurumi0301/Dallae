@@ -8,30 +8,32 @@ export function useAnonymousUser() {
     queryKey: ['/api/auth/anonymous'],
     queryFn: async () => {
       const sessionId = localStorage.getItem('anonymousSessionId');
-      return await apiRequest('/api/auth/anonymous', {
+      const userData = await apiRequest('/api/auth/anonymous', {
         method: 'POST',
         body: JSON.stringify({ sessionId }),
       });
-    },
-    onSuccess: (userData) => {
+      
       // Store session ID for future requests
       if (userData?.sessionId) {
         localStorage.setItem('anonymousSessionId', userData.sessionId);
       }
+      
+      return userData;
     },
     retry: 1,
   });
 
   const createUser = useMutation({
     mutationFn: async () => {
-      return await apiRequest('/api/auth/anonymous', {
+      const userData = await apiRequest('/api/auth/anonymous', {
         method: 'POST',
         body: JSON.stringify({ sessionId: null }),
       });
-    },
-    onSuccess: (userData) => {
+      
       localStorage.setItem('anonymousSessionId', userData.sessionId);
       queryClient.setQueryData(['/api/auth/anonymous'], userData);
+      
+      return userData;
     },
   });
 
