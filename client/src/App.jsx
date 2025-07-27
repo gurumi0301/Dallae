@@ -8,6 +8,7 @@ import Chat from "./pages/Chat";
 import ChatRoom from "./pages/ChatRoom";
 import Diary from "./pages/Diary";
 import Recommendations from "./pages/Recommendations";
+import RecommendationTab from "./pages/RecommendationTab";
 import Profile from "./pages/Profile";
 import OnboardingScreen from "./components/OnboardingScreen";
 import BottomNavigation from "./components/BottomNavigation";
@@ -54,6 +55,7 @@ function Router() {
         <Route path="/chat" component={Chat} />
         <Route path="/chat/:type/:id" component={ChatRoom} />
         <Route path="/recommendations" component={Recommendations} />
+        <Route path="/recommendations/:type" component={RecommendationTab} />
         <Route path="/diary" component={Diary} />
         <Route path="/profile" component={Profile} />
         <Route>
