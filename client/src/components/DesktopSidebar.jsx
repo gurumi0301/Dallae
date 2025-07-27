@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Home, MessageCircle, Heart, BookOpen, User, Settings, Menu, X } from 'lucide-react';
-import './DesktopSidebar.css';
+import '../styles/DesktopSidebar.css';
 
 export default function DesktopSidebar() {
   const [location] = useLocation();
@@ -58,7 +58,7 @@ export default function DesktopSidebar() {
       <div className="sidebar-header">
         <div className="sidebar-logo">
           <span className="logo-icon">🌈</span>
-          <h1 className="logo-text">마음담기</h1>
+          <h1 className="logo-text">달래</h1>
         </div>
         <p className="sidebar-subtitle">익명 감정 지원 플랫폼</p>
         <button 
