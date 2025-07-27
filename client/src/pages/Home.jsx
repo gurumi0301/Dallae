@@ -54,10 +54,7 @@ export default function Home() {
 
   return (
     <div className="home-container" style={{
-      background: `linear-gradient(135deg, 
-        hsl(207, 89%, ${96 - scrollProgress * 8}%) 0%, 
-        hsl(125, 38%, ${97 - scrollProgress * 8}%) 50%, 
-        hsl(36, 100%, ${98 - scrollProgress * 8}%) 100%)`
+      background: 'white'
     }}>
       {/* Background decorations */}
       <div className="bg-decoration bg-decoration-1" style={{opacity: 0.1 * (1 - scrollProgress)}}></div>
@@ -184,10 +181,10 @@ export default function Home() {
           top: 8px;
           left: 50%;
           transform: translateX(-50%);
-          width: calc(100% - 32px);
+          width: auto;
           max-width: 428px;
           margin-bottom: 0;
-          padding: 8px 0;
+          padding: 8px 16px;
           z-index: 1000;
         }
 
@@ -197,8 +194,9 @@ export default function Home() {
           backdrop-filter: blur(10px);
           box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
           border: 1px solid rgba(255, 255, 255, 0.2);
-          transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           margin: 0 auto;
+          max-width: 400px;
         }
 
         .home-header.scrolled .greeting {
@@ -206,6 +204,7 @@ export default function Home() {
           backdrop-filter: blur(20px);
           box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
           border: 1px solid rgba(0, 0, 0, 0.1);
+          max-width: 300px;
         }
 
         .greeting-icon {
