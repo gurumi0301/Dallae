@@ -2,7 +2,7 @@
   position: fixed;
   left: 0;
   top: 0;
-  width: 320px;
+  width: 250px;
   height: 100vh;
   background: linear-gradient(180deg, 
     hsl(207, 89%, 96%) 0%, 
@@ -23,7 +23,7 @@
 }
 
 .sidebar-header {
-  padding: 40px 32px;
+  padding: 30px 20px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   text-align: center;
 }
@@ -39,7 +39,7 @@
 }
 
 .logo-text {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 800;
   color: hsl(220, 14%, 25%);
   margin: 0;
