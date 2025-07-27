@@ -141,9 +141,25 @@ export default function Recommendations() {
           padding: 24px 16px;
           padding-bottom: 100px;
         }
+        
+        @media (min-width: 768px) {
+          .recommendations-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 60px;
+            padding-bottom: 120px;
+          }
+        }
 
         .recommendations-header {
           margin-bottom: 24px;
+          text-align: left;
+        }
+        
+        @media (min-width: 768px) {
+          .recommendations-header {
+            margin-bottom: 40px;
+          }
         }
 
         .page-title {
@@ -152,11 +168,24 @@ export default function Recommendations() {
           color: var(--gray-800);
           margin-bottom: 8px;
         }
+        
+        @media (min-width: 768px) {
+          .page-title {
+            font-size: 36px;
+            margin-bottom: 12px;
+          }
+        }
 
         .page-subtitle {
           color: var(--gray-600);
           font-size: 16px;
           line-height: 1.5;
+        }
+        
+        @media (min-width: 768px) {
+          .page-subtitle {
+            font-size: 18px;
+          }
         }
 
         .categories-section {
@@ -169,6 +198,15 @@ export default function Recommendations() {
           overflow-x: auto;
           padding: 4px 0 8px 0;
           -webkit-overflow-scrolling: touch;
+        }
+        
+        @media (min-width: 768px) {
+          .categories-scroll {
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            overflow-x: visible;
+            gap: 16px;
+          }
         }
 
         .category-btn {
@@ -184,6 +222,13 @@ export default function Recommendations() {
           cursor: pointer;
           transition: all 0.2s;
           flex-shrink: 0;
+        }
+        
+        @media (min-width: 768px) {
+          .category-btn {
+            min-width: 100px;
+            padding: 20px 16px;
+          }
         }
 
         .category-btn:hover {
@@ -215,12 +260,34 @@ export default function Recommendations() {
           font-weight: 600;
           color: var(--gray-800);
           margin-bottom: 20px;
+          text-align: left;
+        }
+        
+        @media (min-width: 768px) {
+          .section-title {
+            font-size: 24px;
+            margin-bottom: 30px;
+          }
         }
 
         .recommendations-grid {
           display: grid;
           grid-template-columns: 1fr;
           gap: 16px;
+        }
+        
+        @media (min-width: 768px) {
+          .recommendations-grid {
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+          }
+        }
+        
+        @media (min-width: 1024px) {
+          .recommendations-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+          }
         }
 
         .recommendation-card {
@@ -230,6 +297,15 @@ export default function Recommendations() {
           box-shadow: var(--shadow);
           border: 1px solid var(--gray-200);
           transition: all 0.2s;
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+        }
+        
+        @media (min-width: 768px) {
+          .recommendation-card {
+            padding: 24px;
+          }
         }
 
         .recommendation-card:hover {
@@ -286,6 +362,7 @@ export default function Recommendations() {
 
         .recommendation-button {
           width: 100%;
+          margin-top: auto;
         }
 
         .bottom-spacer {
