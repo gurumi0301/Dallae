@@ -83,9 +83,9 @@
 }
 
 .desktop-sidebar.collapsed .logo-text,
-.desktop-sidebar.collapsed .sidebar-subtitle {
-  opacity: 0;
-  pointer-events: none;
+.desktop-sidebar.collapsed .sidebar-subtitle,
+.desktop-sidebar.collapsed .logo-icon {
+  display: none;
 }
 
 .desktop-sidebar.collapsed .nav-item-content {

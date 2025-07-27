@@ -7,8 +7,7 @@ export default function Home() {
   const { user } = useAnonymousUser();
   const [selectedEmotion, setSelectedEmotion] = useState('');
   const [scrollY, setScrollY] = useState(0);
-  const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
-  const [fadeClass, setFadeClass] = useState('fade-out');
+
   const [currentTime, setCurrentTime] = useState(new Date());
   const [weather, setWeather] = useState(null);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
@@ -38,31 +37,16 @@ export default function Home() {
     return () => clearInterval(timer);
   }, []);
 
-  // 초기 로딩 페이드인 효과
+  // 초기 로딩 효과
   useEffect(() => {
     if (user?.anonymousName && isInitialLoad) {
-      // 첫 로딩시 1초 후 페이드인
       setTimeout(() => {
-        setFadeClass('fade-in');
         setIsInitialLoad(false);
       }, 1000);
     }
   }, [user?.anonymousName, isInitialLoad]);
 
-  // 메시지 순환 효과
-  useEffect(() => {
-    if (!user?.anonymousName || isInitialLoad) return;
-    
-    const interval = setInterval(() => {
-      setFadeClass('fade-out');
-      setTimeout(() => {
-        setCurrentMessageIndex((prev) => (prev + 1) % 3);
-        setFadeClass('fade-in');
-      }, 500);
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [user?.anonymousName, isInitialLoad]);
+  // 메시지는 고정 (순환하지 않음)
 
   // 위치 기반 날씨 정보 가져오기
   useEffect(() => {
@@ -112,20 +96,13 @@ export default function Home() {
     return `${today} ${time}`;
   };
 
-  const messages = [
-    { type: 'greeting', content: `안녕하세요, ${user?.anonymousName}님` },
-    { type: 'datetime', content: formatDateTime() },
-    { type: 'weather', content: weather ? `${weather.description}, ${weather.temp}°C` : '날씨 정보를 가져오는 중...' }
-  ];
-
-  const backgroundImages = [
-    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&crop=center',
-    'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=600&fit=crop&crop=center',
-    'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop&crop=center'
-  ];
-
-  const currentMessage = messages[currentMessageIndex];
-  const currentBgImage = backgroundImages[currentMessageIndex];
+  // 고정된 배경 이미지와 메시지
+  const fixedBgImage = 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&crop=center';
+  const fixedMessage = {
+    greeting: `안녕하세요, ${user?.anonymousName}님`,
+    datetime: formatDateTime(),
+    weather: weather ? `${weather.description}, ${weather.temp}°C` : '날씨 정보를 가져오는 중...'
+  };
 
   const emotions = [
     { name: '행복', emoji: '😊', color: 'peach' },
@@ -182,24 +159,25 @@ export default function Home() {
           borderRadius: `${20 - scrollProgress * 6}px`
         }}>
           <div className="home-greeting-bg" style={{
-            backgroundImage: `url("${currentBgImage}")`,
-            transition: 'background-image 0.5s ease-in-out'
+            backgroundImage: `url("${fixedBgImage}")`
           }}></div>
           <div className="home-greeting-icon" style={{
             fontSize: `${32 - scrollProgress * 8}px`,
             marginBottom: `${16 - scrollProgress * 8}px`
           }}>🌈</div>
-          <div className={`home-greeting-message ${fadeClass}`}>
+          <div className="home-greeting-message">
             <h1 className="home-greeting-text" style={{
               fontSize: `${26 - scrollProgress * 6}px`,
               marginBottom: `${8 - scrollProgress * 8}px`
             }}>
-              {currentMessage.type === 'greeting' && (
-                <>안녕하세요, <span className="home-user-name">{user?.anonymousName}</span>님</>
-              )}
-              {currentMessage.type === 'datetime' && currentMessage.content}
-              {currentMessage.type === 'weather' && currentMessage.content}
+              {fixedMessage.greeting}
             </h1>
+            <p className="home-greeting-datetime">
+              {fixedMessage.datetime}
+            </p>
+            <p className="home-greeting-weather">
+              {fixedMessage.weather}
+            </p>
           </div>
           <p className="home-greeting-subtitle" style={{
             opacity: 1 - scrollProgress * 2,
