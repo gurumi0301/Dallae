@@ -21,7 +21,7 @@ export default function DesktopSidebar() {
       description: '익명 대화'
     },
     {
-      path: '/recommendations',
+      path: '/recommendations/music',
       icon: Heart,
       label: '추천',
       description: '맞춤 추천'
@@ -71,11 +71,17 @@ export default function DesktopSidebar() {
       </div>
 
       <div className="sidebar-nav">
-        {navigationItems.map((item) => (
+        {navigationItems.map((item) => {
+          const isActive = location === item.path || 
+            (item.path === '/chat' && location.startsWith('/chat/')) ||
+            (item.path === '/recommendations/music' && location.startsWith('/recommendations')) ||
+            (item.path === '/profile' && location.startsWith('/profile'));
+            
+          return (
           <Link 
             key={item.path} 
             href={item.path} 
-            className={`sidebar-nav-item ${location === item.path ? 'active' : ''}`}
+            className={`sidebar-nav-item ${isActive ? 'active' : ''}`}
           >
             <div className="nav-item-icon">
               {React.createElement(item.icon, { size: 18 })}
@@ -84,7 +90,8 @@ export default function DesktopSidebar() {
               <span className="nav-item-title">{item.label}</span>
             </div>
           </Link>
-        ))}
+          );
+        })}
       </div>
 
       <div className="sidebar-footer">

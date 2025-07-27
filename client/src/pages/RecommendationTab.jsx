@@ -7,17 +7,21 @@ export default function RecommendationTab() {
   const { user } = useAnonymousUser();
   const [match, params] = useRoute('/recommendations/:type');
   const activeTab = params?.type || 'music';
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasLoaded, setHasLoaded] = useState(false);
 
-  // 탭 변경 시 로딩 시뮬레이션
+  // 첫 진입 시에만 로딩 표시
   useEffect(() => {
-    setIsLoading(true);
-    const timer = setTimeout(() => {
+    if (!hasLoaded) {
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+        setHasLoaded(true);
+      }, 800);
+      return () => clearTimeout(timer);
+    } else {
       setIsLoading(false);
-    }, 800);
-
-    return () => clearTimeout(timer);
-  }, [activeTab]);
+    }
+  }, [activeTab, hasLoaded]);
 
   const tabs = [
     { id: 'music', name: '음악', emoji: '🎵' },

@@ -20,7 +20,7 @@ export default function BottomNavigation() {
     },
     {
       name: '추천',
-      path: '/recommendations',
+      path: '/recommendations/music',
       icon: '⭐',
       activeIcon: '⭐'
     },
@@ -43,7 +43,7 @@ export default function BottomNavigation() {
       {navItems.map((item) => {
         const isActive = location === item.path || 
           (item.path === '/chat' && location.startsWith('/chat/')) ||
-          (item.path === '/recommendations' && location.startsWith('/recommendations')) ||
+          (item.path === '/recommendations/music' && location.startsWith('/recommendations')) ||
           (item.path === '/profile' && location.startsWith('/profile'));
         
         return (
