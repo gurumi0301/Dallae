@@ -7,7 +7,8 @@ export default function Home() {
   const { user } = useAnonymousUser();
   const [selectedEmotion, setSelectedEmotion] = useState('');
   const [scrollY, setScrollY] = useState(0);
-
+  const [showGreeting, setShowGreeting] = useState(true);
+  const [fadeClass, setFadeClass] = useState('fade-in');
   const [currentTime, setCurrentTime] = useState(new Date());
   const [weather, setWeather] = useState(null);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
@@ -37,12 +38,19 @@ export default function Home() {
     return () => clearInterval(timer);
   }, []);
 
-  // 초기 로딩 효과
+  // 초기 로딩 후 인사말에서 날짜/시간으로 전환
   useEffect(() => {
     if (user?.anonymousName && isInitialLoad) {
+      // 2초 후 페이드아웃 시작
       setTimeout(() => {
-        setIsInitialLoad(false);
-      }, 1000);
+        setFadeClass('fade-out');
+        // 0.5초 후 내용 변경하고 페이드인
+        setTimeout(() => {
+          setShowGreeting(false);
+          setFadeClass('fade-in');
+          setIsInitialLoad(false);
+        }, 500);
+      }, 2000);
     }
   }, [user?.anonymousName, isInitialLoad]);
 
@@ -96,13 +104,13 @@ export default function Home() {
     return `${today} ${time}`;
   };
 
-  // 고정된 배경 이미지와 메시지
+  // 고정된 배경 이미지
   const fixedBgImage = 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop&crop=center';
-  const fixedMessage = {
-    greeting: `안녕하세요, ${user?.anonymousName}님`,
-    datetime: formatDateTime(),
-    weather: weather ? `${weather.description}, ${weather.temp}°C` : '날씨 정보를 가져오는 중...'
-  };
+  
+  // 표시할 메시지 결정
+  const displayMessage = showGreeting 
+    ? `안녕하세요, ${user?.anonymousName}님`
+    : `${formatDateTime()}\n${weather ? `${weather.description}, ${weather.temp}°C` : '날씨 정보를 가져오는 중...'}`;
 
   const emotions = [
     { name: '행복', emoji: '😊', color: 'peach' },
@@ -165,25 +173,13 @@ export default function Home() {
             fontSize: `${32 - scrollProgress * 8}px`,
             marginBottom: `${16 - scrollProgress * 8}px`
           }}>🌈</div>
-          <div className="home-greeting-message">
-            <h1 className="home-greeting-text" style={{
+          <div className={`home-greeting-message ${fadeClass}`}>
+            <div className="home-greeting-text" style={{
               fontSize: `${26 - scrollProgress * 6}px`,
-              marginBottom: `${12 - scrollProgress * 4}px`
+              marginBottom: `${12 - scrollProgress * 4}px`,
+              whiteSpace: 'pre-line'
             }}>
-              {fixedMessage.greeting}
-            </h1>
-            <div className="home-greeting-info">
-              <p className="home-greeting-datetime" style={{
-                fontSize: `${16 - scrollProgress * 2}px`,
-                marginBottom: `${8 - scrollProgress * 2}px`
-              }}>
-                {fixedMessage.datetime}
-              </p>
-              <p className="home-greeting-weather" style={{
-                fontSize: `${14 - scrollProgress * 1}px`
-              }}>
-                {fixedMessage.weather}
-              </p>
+              {displayMessage}
             </div>
           </div>
           <p className="home-greeting-subtitle" style={{
