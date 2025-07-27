@@ -183,8 +183,8 @@ export default function Home() {
         .home-header.scrolled {
           position: fixed;
           top: 16px;
-          left: 50%;
-          transform: translateX(-50%);
+          left: 0;
+          right: 0;
           margin-bottom: 0;
           z-index: 1000;
         }
@@ -196,6 +196,7 @@ export default function Home() {
           box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
           border: 1px solid rgba(255, 255, 255, 0.2);
           margin: 0 auto;
+          max-width: 400px;
         }
 
         .greeting-icon {
