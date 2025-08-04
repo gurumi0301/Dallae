@@ -68,7 +68,7 @@ export default function Login() {
       <div className="auth-card">
         <div className="auth-header">
           <h1 className="auth-title">로그인</h1>
-          <p className="auth-subtitle">마음담기에 오신 것을 환영합니다</p>
+          <p className="auth-subtitle">달래에 오신 것을 환영합니다</p>
         </div>
 
         <form onSubmit={handleSubmit} className="auth-form">
@@ -125,8 +125,8 @@ export default function Login() {
             <Link href="/auth/register" className="auth-link">회원가입</Link>
           </p>
           <p className="auth-link-text">
-            익명으로 이용하고 싶으신가요? 
-            <Link href="/" className="auth-link">익명 모드</Link>
+            비회원으로 이용하고 싶으신가요? 
+            <Link href="/" className="auth-link">비회원 모드</Link>
           </p>
         </div>
       </div>

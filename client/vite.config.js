@@ -1,10 +1,18 @@
-export default {
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import path from "path";
+
+export default defineConfig(({ mode }) => ({
+  plugins: [react()],
+  root: __dirname,
+  base: mode === "production" ? "/Dallae/" : "/",
+  build: {
+    outDir: path.resolve(__dirname, "../dist/client"),
+    emptyOutDir: true,
+  },
   server: {
-    host: '0.0.0.0',
-    allowedHosts: [
-      'localhost',
-      '127.0.0.1',
-      'all'
-    ]
-  }
-};
+    proxy: {
+      "/api": "http://localhost:5000",
+    },
+  },
+}));
