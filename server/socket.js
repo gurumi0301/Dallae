@@ -6,8 +6,8 @@ const httpServer = createServer();
 const io = new Server(httpServer, {
   cors: {
     origin: "*", // 개발 중 허용
-    methods: ["GET", "POST"]
-  }
+    methods: ["GET", "POST"],
+  },
 });
 
 io.on("connection", (socket) => {
@@ -24,6 +24,10 @@ io.on("connection", (socket) => {
 
   socket.on("typing", ({ roomId, senderId }) => {
     socket.to(roomId).emit("user_typing", { senderId });
+  });
+
+  socket.on("stop_typing", (data) => {
+    socket.to(data.roomId).emit("stop_typing", data);
   });
 
   socket.on("disconnect", () => {

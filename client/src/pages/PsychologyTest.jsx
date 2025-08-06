@@ -1,211 +1,93 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'wouter';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { apiRequest } from '../lib/queryClient';
-import '../styles/PsychologyTest.css';
+import React, { useState, useEffect } from "react";
+import { useLocation } from "wouter";
+import { getPsychologyTestPages } from "../components/pychologyTests/index";
+import "../styles/PsychologyTest.css";
 
 export default function PsychologyTest() {
   const [, setLocation] = useLocation();
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState({});
-  const [isCompleted, setIsCompleted] = useState(false);
-  const [testResult, setTestResult] = useState(null);
+  const [pages, setPages] = useState([]);
+  const [result, setResult] = useState(null);
 
-  // 심리검사 데이터 가져오기
-  const { data: test, isLoading } = useQuery({
-    queryKey: ['/api/psychology-tests/default'],
-  });
-
-  // 결과 제출
-  const submitTestMutation = useMutation({
-    mutationFn: async (data) => {
-      const response = await apiRequest('/api/psychology-tests/submit', {
-        method: 'POST',
-        body: JSON.stringify(data),
-      });
-      return response;
-    },
-    onSuccess: (data) => {
-      setTestResult(data.results);
-      setIsCompleted(true);
-    },
-    onError: (error) => {
-      console.error('Test submission error:', error);
-    }
-  });
-
-  const handleAnswerSelect = (questionId, answer) => {
-    setAnswers(prev => ({
-      ...prev,
-      [questionId]: answer
-    }));
-  };
+  useEffect(() => {
+    getPsychologyTestPages(answers, setAnswers).then(setPages);
+  }, []);
 
   const handleNext = () => {
-    if (currentQuestionIndex < test.questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    const currentTest = pages[currentIndex];
+
+    const hasRequiredEmpty = currentTest.test?.questions?.some((q) => {
+      if (!q.require) return false;
+      const val = answers[q.id];
+      if (q.multiple) return !Array.isArray(val) || val.length === 0;
+      return val === undefined || val === "";
+    });
+
+    if (hasRequiredEmpty) {
+      alert("필수 질문에 모두 응답해주세요.");
+      return;
+    }
+
+    if (currentIndex < pages.length - 1) {
+      setCurrentIndex(currentIndex + 1);
     } else {
-      // 모든 질문 완료, 결과 제출
-      submitTestMutation.mutate({
-        testId: test.id,
-        answers: answers
-      });
+      const total = Object.values(answers).reduce((sum, v) => {
+        if (Array.isArray(v)) {
+          return sum + v.reduce((s, x) => s + Number(x), 0);
+        }
+        return sum + Number(v);
+      }, 0);
+
+      const result = {
+        totalScore: total,
+        analysis: "스트레스 수준이 보통입니다.",
+        answers,
+      };
+
+      fetch("/auth/심리검사/result", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(result),
+      }).then(() => setResult(result));
     }
   };
 
   const handlePrevious = () => {
-    if (currentQuestionIndex > 0) {
-      setCurrentQuestionIndex(currentQuestionIndex - 1);
-    }
+    if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
   };
 
-  const handleComplete = () => {
-    setLocation('/');
-  };
+  const progress = ((currentIndex + 1) / pages.length) * 100;
 
-  if (isLoading) {
+  if (result) {
     return (
       <div className="psychology-test-container">
-        <div className="loading-section">
-          <div className="loading-spinner"></div>
-          <p className="loading-text">심리검사를 준비하고 있습니다...</p>
-        </div>
+        <h1>검사 완료</h1>
+        <p>총점: {result.totalScore}</p>
+        <p>{result.analysis}</p>
+        <button onClick={() => setLocation("/")}>홈으로</button>
       </div>
     );
   }
-
-  if (!test) {
-    return (
-      <div className="psychology-test-container">
-        <div className="error-section">
-          <h2>심리검사를 불러올 수 없습니다</h2>
-          <button onClick={() => setLocation('/')} className="back-button">
-            홈으로 돌아가기
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  if (isCompleted && testResult) {
-    return (
-      <div className="psychology-test-container">
-        <div className="result-section">
-          <div className="result-header">
-            <h1 className="result-title">심리검사 완료</h1>
-            <p className="result-subtitle">검사 결과를 확인해보세요</p>
-          </div>
-
-          <div className="result-content">
-            <div className="result-score">
-              <h3>종합 점수</h3>
-              <div className="score-display">
-                <span className="score-number">{testResult.totalScore}</span>
-                <span className="score-total">/ 100</span>
-              </div>
-            </div>
-
-            <div className="result-analysis">
-              <h3>분석 결과</h3>
-              <p className="analysis-text">{testResult.analysis}</p>
-            </div>
-
-            <div className="result-categories">
-              <h3>세부 영역별 점수</h3>
-              <div className="category-list">
-                {testResult.categories?.map((category, index) => (
-                  <div key={index} className="category-item">
-                    <div className="category-info">
-                      <span className="category-name">{category.name}</span>
-                      <span className="category-score">{category.score}/20</span>
-                    </div>
-                    <div className="category-bar">
-                      <div 
-                        className="category-progress" 
-                        style={{ width: `${(category.score / 20) * 100}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="result-recommendations">
-              <h3>추천사항</h3>
-              <ul className="recommendation-list">
-                {testResult.recommendations?.map((rec, index) => (
-                  <li key={index} className="recommendation-item">{rec}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div className="result-actions">
-            <button onClick={handleComplete} className="complete-button">
-              마음담기 시작하기
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  const currentQuestion = test.questions[currentQuestionIndex];
-  const progress = ((currentQuestionIndex + 1) / test.questions.length) * 100;
 
   return (
     <div className="psychology-test-container">
-      <div className="test-header">
-        <h1 className="test-title">{test.name}</h1>
-        <div className="progress-section">
-          <div className="progress-bar">
-            <div 
-              className="progress-fill" 
-              style={{ width: `${progress}%` }}
-            ></div>
-          </div>
-          <span className="progress-text">
-            {currentQuestionIndex + 1} / {test.questions.length}
-          </span>
-        </div>
+      <div className="progress-bar">
+        <div className="progress-fill" style={{ width: `${progress}%` }} />
       </div>
 
-      <div className="question-section">
-        <div className="question-card">
-          <h2 className="question-text">{currentQuestion.text}</h2>
-          
-          <div className="answer-options">
-            {currentQuestion.options.map((option, index) => (
-              <button
-                key={index}
-                onClick={() => handleAnswerSelect(currentQuestion.id, option.value)}
-                className={`answer-option ${
-                  answers[currentQuestion.id] === option.value ? 'selected' : ''
-                }`}
-              >
-                <span className="option-label">{option.label}</span>
-                <span className="option-text">{option.text}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
+      {pages.length > 0 && pages[currentIndex].component(answers, setAnswers)}
 
       <div className="test-navigation">
-        <button 
-          onClick={handlePrevious}
-          disabled={currentQuestionIndex === 0}
+        <button
           className="nav-button secondary"
+          onClick={handlePrevious}
+          disabled={currentIndex === 0}
         >
           이전
         </button>
-        
-        <button 
-          onClick={handleNext}
-          disabled={!answers[currentQuestion.id]}
-          className="nav-button primary"
-        >
-          {currentQuestionIndex === test.questions.length - 1 ? '완료' : '다음'}
+        <button className="nav-button primary" onClick={handleNext}>
+          {currentIndex === pages.length - 1 ? "제출" : "다음"}
         </button>
       </div>
     </div>

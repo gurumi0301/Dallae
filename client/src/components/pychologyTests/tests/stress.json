@@ -1,0 +1,25 @@
+{
+  "id": "stress",
+  "name": "스트레스 검사",
+  "target": "청소년",
+  "questions": [
+    {
+      "id": "q1",
+      "question": "요즘 피곤한가요?",
+      "require": true,
+      "options": [
+        { "id": "1", "name": "전혀 아니다", "value": "", "type": "text" },
+        { "id": "2", "name": "약간 그렇다", "value": 1, "type": "radio" }
+      ]
+    },
+    {
+      "id": "q2",
+      "question": "스트레스를 자주 느끼나요?",
+      "require": true,
+      "options": [
+        { "id": "1", "name": "거의 없음", "value": 0, "type": "radio" },
+        { "id": "2", "name": "자주 있음", "value": 1, "type": "radio" }
+      ]
+    }
+  ]
+}

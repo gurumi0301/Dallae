@@ -45,16 +45,6 @@ export const emotions = pgTable("emotions", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
-// 심리검사 테이블
-export const psychologyTests = pgTable("psychology_tests", {
-  id: serial("id").primaryKey(),
-  name: varchar("name", { length: 200 }).notNull(),
-  description: text("description"),
-  questions: jsonb("questions").notNull(), // JSON 형태로 질문들 저장
-  isActive: boolean("is_active").default(true),
-  createdAt: timestamp("created_at").defaultNow(),
-});
-
 // 심리검사 결과 테이블
 export const psychologyTestResults = pgTable("psychology_test_results", {
   id: serial("id").primaryKey(),

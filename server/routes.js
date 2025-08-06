@@ -162,9 +162,9 @@ export async function registerRoutes(app) {
   // 심리검사 가져오기
   app.get('/api/psychology-tests/default', async (req, res) => {
     try {
-      const query = `SELECT * FROM psychology_tests WHERE is_active = true LIMIT 1`;
-      const result = await pool.query(query);
-      const test = result.rows[0];
+      // const query = `SELECT * FROM psychology_tests WHERE is_active = true LIMIT 1`;
+      // const result = await pool.query(query);
+      // const test = result.rows[0];
       
       if (!test) {
         return res.status(404).json({ error: '심리검사를 찾을 수 없습니다' });

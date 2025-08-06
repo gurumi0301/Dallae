@@ -1,91 +1,115 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useAnonymousUser } from '../hooks/useAnonymousUser';
-import { useLocation } from 'wouter';
-import { getSocket } from '../hooks/socket';
+import React, { useState, useRef, useEffect } from "react";
+import { useAnonymousUser } from "../hooks/useAnonymousUser";
+import { useLocation } from "wouter";
+import { getSocket } from "../hooks/socket";
 const socket = getSocket();
-import '../styles/Chat.css';
+import { generateAnonymousName } from "../../../server/services/anonymousNames";
+import "../styles/Chat.css";
 
 export default function ChatRoom() {
   const { user } = useAnonymousUser();
   const [location, setLocation] = useLocation();
   const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState('');
+  const [newMessage, setNewMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [chatInfo, setChatInfo] = useState(null);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const typingTimeoutRef = useRef(null); // 타이핑 타이머 추적
 
   // URL에서 채팅 정보 추출
   useEffect(() => {
-    const pathParts = location.split('/');
+    const pathParts = location.split("/");
     if (pathParts.length >= 4) {
       const chatType = pathParts[2]; // random, ai, etc.
       const chatId = pathParts[3];
 
-      let partnerName = '';
+      let partnerName = "";
       switch (chatType) {
-        case 'random':
-          partnerName = '익명의 친구';
+        case "random":
+          partnerName = generateAnonymousName();
           break;
-        case 'ai':
-          partnerName = 'AI 상담사';
+        case "ai":
+          partnerName = "AI 상담사";
           break;
         default:
-          partnerName = '채팅 상대';
+          partnerName = "채팅 상대";
       }
 
       setChatInfo({
         type: chatType,
         id: chatId,
-        partnerName
+        partnerName,
       });
     }
   }, [location]);
 
   // 메시지 자동 스크롤
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // 소켓 설정
+  // 소켓 리스너 설정
   useEffect(() => {
-  if (!chatInfo || !user) return;
+    if (!chatInfo || !user) return;
 
-  const joinedRoomId = chatInfo.id;
-  const userId = user.id;
+    const joinedRoomId = chatInfo.id;
+    const userId = user.id;
 
-  const handleReceive = (message) => {
-    setMessages(prev => [...prev, {
-      ...message,
-      isOwn: message.senderId === userId
-    }]);
-  };
+    const handleReceive = (message) => {
+      setMessages((prev) => [
+        ...prev,
+        {
+          ...message,
+          isOwn: message.senderId === userId,
+        },
+      ]);
+    };
 
-  const handleTyping = (data) => {
-    if (data.senderId !== userId) {
-      setIsTyping(true);
-      setTimeout(() => setIsTyping(false), 5000);
-    }
-  };
+    const handleTyping = (data) => {
+      if (data.senderId !== userId) {
+        setIsTyping(true);
+        if (typingTimeoutRef.current) {
+          clearTimeout(typingTimeoutRef.current);
+        }
+        typingTimeoutRef.current = setTimeout(() => {
+          setIsTyping(false);
+          typingTimeoutRef.current = null;
+        }, 5000);
+      }
+    };
 
-  socket.emit("join_room", {
-    roomId: joinedRoomId,
-    user: {
-      id: userId,
-      name: user.anonymousName
-    }
-  });
+    const handleStopTyping = (data) => {
+      if (data.senderId !== user?.Id) {
+        setIsTyping(false);
+        if (typingTimeoutRef.current) {
+          clearTimeout(typingTimeoutRef.current);
+          typingTimeoutRef.current = null;
+        }
+      }
+    };
 
-  socket.on("receive_message", handleReceive);
-  socket.on("user_typing", handleTyping);
+    socket.emit("join_room", {
+      roomId: joinedRoomId,
+      user: {
+        id: userId,
+        name: user.anonymousName,
+      },
+    });
 
-  return () => {
-    socket.off("receive_message", handleReceive);
-    socket.off("user_typing", handleTyping);
-    socket.emit("leave_room", { roomId: joinedRoomId });
-  };
-}, [chatInfo?.id, user?.id]);
+    socket.on("receive_message", handleReceive);
+    socket.on("user_typing", handleTyping);
+    socket.on("stop_typing", handleStopTyping);
 
+    return () => {
+      socket.off("receive_message", handleReceive);
+      socket.off("user_typing", handleTyping);
+      socket.off("stop_typing", handleStopTyping);
+      socket.emit("leave_room", { roomId: joinedRoomId });
+    };
+  }, [chatInfo?.id, user?.id]);
+
+  // 메시지 전송
   const sendMessage = () => {
     if (!newMessage.trim() || !chatInfo || !user) return;
 
@@ -100,30 +124,32 @@ export default function ChatRoom() {
 
     socket.emit("send_message", message);
 
-    setMessages(prev => [...prev, {
-      ...message,
-      isOwn: true
-    }]);
+    // 타이핑 중단 신호 보내기
+    socket.emit("stop_typing", {
+      roomId: chatInfo?.id,
+      senderId: user?.id,
+    });
 
-    setNewMessage('');
+    setNewMessage("");
   };
 
+  // 입력 시 타이핑 신호
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
     } else {
       socket.emit("typing", {
         roomId: chatInfo?.id,
-        senderId: user.id
+        senderId: user.id,
       });
     }
   };
 
   const formatTime = (timestamp) => {
-    return new Date(timestamp).toLocaleTimeString('ko-KR', {
-      hour: '2-digit',
-      minute: '2-digit'
+    return new Date(timestamp).toLocaleTimeString("ko-KR", {
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
@@ -131,11 +157,14 @@ export default function ChatRoom() {
     if (!previousMessage) return true;
     const curr = new Date(currentMessage.timestamp);
     const prev = new Date(previousMessage.timestamp);
-    return curr.getMinutes() !== prev.getMinutes() || curr.getHours() !== prev.getHours();
+    return (
+      curr.getMinutes() !== prev.getMinutes() ||
+      curr.getHours() !== prev.getHours()
+    );
   };
 
   const handleLeaveChat = () => {
-    setLocation('/chat');
+    setLocation("/chat");
   };
 
   if (!chatInfo) {
@@ -156,7 +185,7 @@ export default function ChatRoom() {
           <div className="chat-room-info">
             <h1 className="page-title">{chatInfo.partnerName}</h1>
             <p className="page-subtitle">
-              {chatInfo.type === 'ai' ? 'AI 상담' : '익명 채팅'}
+              {chatInfo.type === "ai" ? "AI 상담" : "익명 채팅"}
             </p>
           </div>
         </div>
@@ -168,18 +197,24 @@ export default function ChatRoom() {
             const showTime = shouldShowTime(message, messages[index - 1]);
             return (
               <div key={message.id}>
-                <div className={`message ${message.isOwn ? 'own' : ''}`}>
+                <div className={`message ${message.isOwn ? "own" : ""}`}>
                   <div className="message-avatar">
                     {message.isOwn
                       ? user.anonymousName[0]
-                      : (chatInfo.type === 'ai' ? '🤖' : '친')}
+                      : chatInfo.type === "ai"
+                      ? "🤖"
+                      : `${chatInfo.partnerName[0]}`}
                   </div>
                   <div className="message-content">
                     <p className="message-text">{message.text}</p>
                   </div>
                 </div>
                 {showTime && (
-                  <div className={`message-timestamp ${message.isOwn ? 'own' : ''}`}>
+                  <div
+                    className={`message-timestamp ${
+                      message.isOwn ? "own" : ""
+                    }`}
+                  >
                     {formatTime(message.timestamp)}
                   </div>
                 )}
@@ -190,7 +225,7 @@ export default function ChatRoom() {
           {isTyping && (
             <div className="message">
               <div className="message-avatar">
-                {chatInfo.type === 'ai' ? '🤖' : '친'}
+                {chatInfo.type === "ai" ? "🤖" : `${chatInfo.partnerName[0]}`}
               </div>
               <div className="message-content">
                 <div className="typing-indicator">
@@ -209,7 +244,13 @@ export default function ChatRoom() {
         </div>
 
         <div className="chat-input-area">
-          <form className="chat-input-form" onSubmit={(e) => { e.preventDefault(); sendMessage(); }}>
+          <form
+            className="chat-input-form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              sendMessage();
+            }}
+          >
             <textarea
               ref={inputRef}
               value={newMessage}
@@ -224,7 +265,14 @@ export default function ChatRoom() {
               disabled={!newMessage.trim()}
               className="chat-send-btn"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
                 <path d="m22 2-7 20-4-9-9-4z" />
                 <path d="M22 2 11 13" />
               </svg>
@@ -234,6 +282,7 @@ export default function ChatRoom() {
       </div>
 
       <div className="bottom-spacer"></div>
+      <footer>테스트</footer>
     </div>
   );
 }
